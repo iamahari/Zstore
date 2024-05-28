@@ -79,6 +79,21 @@
                   endingLineNumber = "540"
                   offsetFromSymbolStart = "68">
                </Location>
+               <Location
+                  uuid = "FF3C6162-CCED-4A32-9B52-FC579B413B24 - 72bb5194066486dd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Zstore.HomeVC.removeSelectedOffer() -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Desktop/Zstore/ZstoreApp/Home/HomeVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "352"
+                  endingLineNumber = "352"
+                  offsetFromSymbolStart = "68">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

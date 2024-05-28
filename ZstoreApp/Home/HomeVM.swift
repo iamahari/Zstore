@@ -76,31 +76,39 @@ extension HomeVM {
     
     func fetchProductDetailsAPI() {
         apiService.value = .loading
-        guard let url = URL(string: "https://raw.githubusercontent.com/princesolomon/zstore/main/data.json") else { return }
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        ProductDataManager().fetch { productDetails, error in
             if let error = error {
-                print("Data task error: \(error.localizedDescription)")
+                print(error)
                 return
             }
-            guard let data = data else { return }
-            do {
-                let decoder = JSONDecoder()
-                let model = try decoder.decode(ProductDetails.self, from: data)
-                DispatchQueue.main.async {
-                    self.productDetails = model
-                    self.products = model.products
-                    self.allProducts = model.products
-                    self.categorys = model.category
-                    self.cardOffers = model.cardOffers
-                    
-                }
-                self.apiService.value = .populated
-            } catch {
-                print("Decoding error: \(error.localizedDescription)")
-                self.apiService.value = .error
-            }
+            
+            guard let (categories,offers,products) = productDetails else {return}
         }
-        task.resume()
+//        guard let url = URL(string: "https://raw.githubusercontent.com/princesolomon/zstore/main/data.json") else { return }
+//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//            if let error = error {
+//                print("Data task error: \(error.localizedDescription)")
+//                return
+//            }
+//            guard let data = data else { return }
+//            do {
+//                let decoder = JSONDecoder()
+//                let model = try decoder.decode(ProductDetails.self, from: data)
+//                DispatchQueue.main.async {
+//                    self.productDetails = model
+//                    self.products = model.products
+//                    self.allProducts = model.products
+//                    self.categorys = model.category
+//                    self.cardOffers = model.cardOffers
+//                    
+//                }
+//                self.apiService.value = .populated
+//            } catch {
+//                print("Decoding error: \(error.localizedDescription)")
+//                self.apiService.value = .error
+//            }
+//        }
+//        task.resume()
     }
     
 }
