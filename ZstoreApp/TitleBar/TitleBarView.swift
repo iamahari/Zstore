@@ -12,16 +12,16 @@ import UIKit
 class TitleBarView: UIView {
     
     // MARK: Create the UI components
-    var titleLabel = AppUIComponents.createLabel(text: "",textColor: .black_colour,font:  UIFont.systemFont(ofSize: 30, weight: .bold))
+    lazy var titleLabel = AppUIComponents.createLabel(text: "",textColor: .black_colour,font:  UIFont.systemFont(ofSize: 30, weight: .bold))
 
-    let leftButton: UIButton = {
+    lazy var leftButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "search_icon"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    var customSearchView: CustomSearchView = {
+    lazy var customSearchView: CustomSearchView = {
         let searchView = CustomSearchView()
         searchView.translatesAutoresizingMaskIntoConstraints = false
         searchView.isHidden = true

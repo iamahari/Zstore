@@ -11,152 +11,31 @@ class LinearCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "LinearCollectionViewCell"
     
-//    weak var delegate: ProductCollectionViewCellDelegate?
-    
-    
-   
-    //--------- Top Image View -----------//
-    let productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-        
-    }()
-    
-    let favoriteImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "favorite_icon")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        return imageView
-        
-    }()
-
-    let infoStackView: UIStackView = {
-        let verticalStackView = UIStackView()
-        verticalStackView.axis = .vertical
-        verticalStackView.alignment = .fill
-        verticalStackView.distribution = .fill
-        verticalStackView.spacing = 4
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        return verticalStackView
-    }()
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font =  UIFont.font(with: 18, family: FontType.medium)
-        label.textColor = .black_colour
-        label.numberOfLines = 3
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let ratingVew: RatingView = {
+    // MARK: Create the UI components
+    lazy var productImageView = AppUIComponents.createImageView(contentMode: .scaleAspectFill)
+    lazy var favoriteImageView = AppUIComponents.createImageView(image: UIImage(named: "favorite_icon"),contentMode: .scaleAspectFill)
+    let infoStackView = AppUIComponents.createStackView(axis: .vertical, alignment: .fill, distribution: .fill, spacing: 4)
+    let colorsStackView =  AppUIComponents.createStackView(axis: .horizontal, alignment: .fill, distribution: .fill, spacing: 4)
+    lazy var titleLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font: UIFont.font(with: 18, family: FontType.medium))
+    lazy var ratingVew: RatingView = {
         let view = RatingView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    lazy var priceContainerView = AppUIComponents.createView()
+    lazy var priceLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font: UIFont.font(with: 20, family: FontType.semibold))
+    lazy var oldPriceLabel = AppUIComponents.createLabel(text:"",textColor: .gray_color, textAlignment: .left,font: UIFont.font(with: 13, family: FontType.regular))
+    lazy var descriptionLabel = AppUIComponents.createLabel(text:"",textColor: .description_colour, textAlignment: .left,font:  UIFont.font(with: 13, family: FontType.regular))
+    lazy var createTextView = AppUIComponents.createTextView()
+    let savedPriceButton = CustomButton(backgroundColor: .green_colour,
+                                         titleAlignment: .center,
+                                         titleFont: UIFont.font(with: 11, family: FontType.medium),
+                                         titleColor: .white_colour,
+                                         contentInsets: NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8),
+                                         isUserInteractionEnabled: false)
+    lazy var colorsContainerView = AppUIComponents.createView()
     
-    //------------Price View ------------//
-    let priceContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let priceLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = UIFont.font(with: 20, family: FontType.semibold)
-        label.textColor = .black_colour
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let oldPriceLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = UIFont.font(with: 13, family: FontType.regular)
-        label.textColor = .gray_color
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = UIFont.font(with: 13, family: FontType.regular)
-        label.textColor = .description_colour
-        label.numberOfLines = 3
-        label.isUserInteractionEnabled = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let descriptionLabel1: UITextView = {
-        let label = UITextView()
-        label.textAlignment = .left
-        label.font = UIFont.font(with: 13, family: FontType.regular)
-        label.textColor = .description_colour
-        label.isEditable = false
-        label.isScrollEnabled = false
-        label.isUserInteractionEnabled = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let savedPriceButton: UIButton = {
-        let button = UIButton()
-        var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = .green_colour
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8)
-        button.configuration = configuration
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.font(with: 11, family: FontType.medium)
-        button.titleLabel?.textColor = .white_colour
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.isUserInteractionEnabled = false
-        return button
-    }()
-    
-    //------Colors View---------------
-    let colorsContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let colorsStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.spacing = 1
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    
-//    var product: Products? {
-//      didSet {
-//        if let product = product {
-////            productImageView.image = UIImage(named:  product.image)
-////            titleLabel.text = product.name
-////            priceLabel.text = product.currentPrice
-////            oldPriceLabel.attributedText = Utils.markText(product.oldPrice)
-////            savedPriceButton.setTitle( "Save \(product.discount)", for: .normal)
-////            descriptionLabel.attributedText = Utils.getModifiedString(product.deliveryInfo)
-////            setupColorsView(colors: product.colors)
-////            ratingVew.addRatingsDetails(with: product)
-////            savedPriceButton.isHidden = !product.showDiscontCount
-////            oldPriceLabel.isHidden = !product.showDiscontCount
-//        }
-//      }
-//    }
-//    
+    // MARK: Overide function
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -166,8 +45,12 @@ class LinearCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: Setup the constraint
     private func setupViews() {
-        
+        titleLabel.numberOfLines = 3
+        priceLabel.numberOfLines = 3
+        oldPriceLabel.numberOfLines = 3
+        descriptionLabel.numberOfLines = 3
         contentView.addSubview(productImageView)
         contentView.addSubview(infoStackView)
         infoStackView.addArrangedSubview(titleLabel)
@@ -227,6 +110,11 @@ class LinearCollectionViewCell: UICollectionViewCell {
 
     }
     
+    /// Updates the cell UI with product details and card offers.
+    ///
+    /// - Parameters:
+    ///   - product: The `ProductsList` object containing product details.
+    ///   - selectedCardOffer: The `CardOffers` object representing the selected card offer.
     func updateCell(product: ProductsList,with selectedCardOffer: CardOffers?) {
         if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
@@ -235,9 +123,11 @@ class LinearCollectionViewCell: UICollectionViewCell {
         priceLabel.text = String(Utils.formatAsIndianCurrency(product.price) ?? "")
         descriptionLabel.attributedText = Utils.getModifiedString(product.productDescription ?? "")
         ratingVew.addRatingsDetails(with: product)
-//        showOrDismissFavoriteButtonView(show: !(false))
+        if let color = product.colors {
+            let colorsArray = color.split(separator: ",").map { String($0) }
+            setupColorsView(colors: colorsArray)
+        }
         isOfferApplied(isApplied: true)
-        
         guard let selectedCardOffer = selectedCardOffer else{return}
         oldPriceLabel.attributedText = Utils.markText(Utils.formatAsIndianCurrency(product.price) ?? "")
         priceLabel.text = String(Utils.calculateDiscountedPrice(product.price, selectedCardOffer.percentage))
@@ -248,13 +138,18 @@ class LinearCollectionViewCell: UICollectionViewCell {
     
    
     
+    /// Adjusts the visibility of UI elements based on whether an offer is applied.
+    ///
+    /// - Parameters:
+    ///   - isApplied: A boolean value indicating whether an offer is applied.
     func isOfferApplied(isApplied: Bool) {
         oldPriceLabel.isHidden = isApplied
         savedPriceButton.isHidden = isApplied
-        
     }
 
-    
+    /// Sets up the color view with the provided colors.
+    ///
+    /// - Parameter colors: An array of strings representing colors.
     private func setupColorsView(colors: [String]) {
         colorsStackView.subviews.forEach({ $0.removeFromSuperview()})
         for color in colors {
@@ -264,7 +159,10 @@ class LinearCollectionViewCell: UICollectionViewCell {
             colorsStackView.addArrangedSubview(circleImageView)
         }
     }
-    
+
+    /// Handles tap gestures on UILabels to open URLs if available in attributed text.
+    ///
+    /// - Parameter gesture: The UITapGestureRecognizer instance.
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel else { return }
         let text = label.attributedText?.string ?? ""

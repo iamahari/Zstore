@@ -129,32 +129,42 @@ class OfferCardListView: UICollectionReusableView{
         ])
     }
     
-    //MARK: Button Action
+    // MARK: - Button Actions
     
+    /// Handles the action when the remove offer button is tapped.
+    ///
+    /// - Parameter sender: The button that triggered the action.
     @objc func actionOnRemoveOffer(_ sender: UIButton) {
         print("Removed offer")
         removeOfferTapped?(self)
         setOfferViewConstraint(isOfferAdded: false)
     }
-    
-    
-    //MARK: Other Function
-    
+
+    // MARK: - Other funtion
+
+    /// Configures the view with the provided data and sets the offer view constraint.
+    ///
+    /// - Parameters:
+    ///   - data: An optional array of `CardOffers` to be displayed.
+    ///   - isOfferAdded: A Boolean indicating whether an offer has been added.
     func configureData(data: [CardOffers]?, isOfferAdded: Bool) {
         cardOffers = data
         offerCollectionView.reloadData()
         setOfferViewConstraint(isOfferAdded: isOfferAdded)
-       
     }
-    
+
+    // MARK: - View Constraints
+
+    /// Sets the constraints for the offer view based on whether an offer has been added.
+    ///
+    /// - Parameter isOfferAdded: A Boolean indicating whether an offer has been added.
     func setOfferViewConstraint(isOfferAdded: Bool) {
         self.containerView.isHidden = !isOfferAdded
         self.containerViewBottomConstraints.constant = isOfferAdded ? -12 : 44
-        UIView.animate(withDuration: 0.5,delay: 0, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
             self.containerView.layoutIfNeeded()
         }, completion: nil)
     }
-    
     
     
 

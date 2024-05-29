@@ -16,6 +16,7 @@
     <entity name="ProductsList" representedClassName="ProductsList" syncable="YES">
         <attribute name="cardOfferId" optional="YES" attributeType="String" customClassName="[String]"/>
         <attribute name="categoryId" optional="YES" attributeType="String"/>
+        <attribute name="colors" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="imageUrl" optional="YES" attributeType="String"/>
         <attribute name="isFav" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>

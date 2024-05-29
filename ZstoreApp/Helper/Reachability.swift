@@ -1,8 +1,11 @@
 import Foundation
 import SystemConfiguration
 
+
 public class Reachability {
     
+    /// To check the network connection
+    /// - Returns: Retuen the wether network connect or not
     class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))

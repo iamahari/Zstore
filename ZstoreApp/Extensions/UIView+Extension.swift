@@ -32,6 +32,8 @@ extension UIView {
         clipsToBounds = true
     }
     
+    /// Add the GradientBackground color
+    /// - Parameter colors: To get the list of gradient color
     func addLinearGradientBackground(colors: [CGColor]) {
             if let sublayers = layer.sublayers {
                 for sublayer in sublayers where sublayer is CAGradientLayer {
@@ -46,27 +48,3 @@ extension UIView {
         }
 }
 
-class GradientViews: UIView {
-    
-    var gradientColors: [CGColor] = [] {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // Remove existing gradient layer if any
-        if let sublayers = layer.sublayers {
-            for sublayer in sublayers where sublayer is CAGradientLayer {
-                sublayer.removeFromSuperlayer()
-            }
-        }
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = bounds
-        gradientLayer.colors = gradientColors
-        layer.insertSublayer(gradientLayer, at: 0)
-    }
-}

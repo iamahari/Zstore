@@ -37,46 +37,41 @@ class HomeVM {
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-     //MARK: Category filler functionality
+    /// Performs actions when a category is selected.
+    ///
+    /// - Parameter index: The index of the selected category.
     func actionOnSelectedCategory(index: Int) {
         let lastSelectedIndex = selectedCategoryIndex
         selectedCategoryIndex = index
         categorysService.value = (selectedCategoryIndex, lastSelectedIndex)
-       
         self.isWaterFallLayout = categorys?[index].layout == "waterfall"
         filterByCardOfferID(with: selectedCardOffer?.id)
-//        categoryFilteredProduct(categoryId: categorys?[index].id ?? "100023")
-    }
-    
-    func actionOnSelectedOfferCard(_ cardOffer: CardOffers){
-        selectedCardOffer = cardOffer
-        cardOfferSerview.value = cardOffer
     }
 
-    
-    /// Filters the products based on the user input and updates the `products`
-    /// - Parameter userInput: The search text entered by the user.
+    /// Filters products based on user search input.
+    ///
+    /// - Parameter userInput: The user's search input.
     func filterProductBySearch(with userInput: String) {
         searchValue = userInput
         
         if userInput.isEmpty {
             showCardList = true
             filterByCardOfferID(with: selectedCardOffer?.id)
-//            categoryFilteredProduct(categoryId: categorys?[selectedCategoryIndex].id ?? "100023")
-            
-            
-        }else{
-            if let products = coredate.fetchProductByName(with: userInput,byID: categorys?[selectedCategoryIndex].id ?? "",isFilterByRating) {
+        } else {
+            if let products = coredate.fetchProductByName(with: userInput, byID: categorys?[selectedCategoryIndex].id ?? "", isFilterByRating) {
                 self.products = products
                 productSerview.value = true
                 showCardList = false
-           }else{
-               apiService.value = .error("Product not found.")
-           }
+            } else {
+                apiService.value = .error("Product not found.")
+            }
         }
         categorysService.value = (selectedCategoryIndex, nil)
     }
-    
+
+    /// Filters products by category ID.
+    ///
+    /// - Parameter categoryId: The ID of the category.
     func categoryFilteredProduct(categoryId: String) {
         if let products = coredate.fetchProductById(byID: categoryId, isFilterByRating) {
             self.products = products
@@ -86,35 +81,38 @@ class HomeVM {
         
         productSerview.value = false
     }
-    
-    func filterByCardOfferID(with cardId: String?){
+
+    /// Filters products by card offer ID.
+    ///
+    /// - Parameter cardId: The ID of the card offer.
+    func filterByCardOfferID(with cardId: String?) {
         guard let cardId = cardId else {
             selectedCardOffer = nil
             categoryFilteredProduct(categoryId: categorys?[selectedCategoryIndex].id ?? "")
             return
         }
-        if let products = coredate.fetchCardOfferById(with: cardId,byID: categorys?[selectedCategoryIndex].id ?? "",isFilterByRating) {
+        if let products = coredate.fetchCardOfferById(with: cardId, byID: categorys?[selectedCategoryIndex].id ?? "", isFilterByRating) {
             self.products = products
         } else {
             apiService.value = .error("Product not found.")
         }
         productSerview.value = false
     }
-    
-    func updateFavList(with productId: String,isFav: Bool) {
-        
-        
-        if let isFavAdd = coredate.updateIsFav(for: productId, to: isFav,isFilterByRating) {
+
+    /// Updates the favorite list for a product.
+    ///
+    /// - Parameters:
+    ///   - productId: The ID of the product.
+    ///   - isFav: A Boolean value indicating whether the product is marked as favorite.
+    func updateFavList(with productId: String, isFav: Bool) {
+        if let isFavAdd = coredate.updateIsFav(for: productId, to: isFav, isFilterByRating) {
             if isFavAdd.isEmpty {
                 print("add fav")
-            }else{
+            } else {
                 apiService.value = .error(isFavAdd)
             }
         }
     }
-    
-    
-    
 }
 
 

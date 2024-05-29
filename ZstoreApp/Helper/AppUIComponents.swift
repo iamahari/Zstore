@@ -44,8 +44,10 @@ class AppUIComponents {
         let label = UILabel()
         label.text = text
         label.textColor = textColor
+//        label.numberOfLines = numberOfLine
         label.textAlignment = textAlignment
         label.font = font
+        label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
@@ -89,9 +91,34 @@ class AppUIComponents {
         imageView.contentMode = contentMode
         imageView.clipsToBounds = clipsToBounds
         imageView.tintColor = tintColor
+        imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
+    static func createTextView(text: String = "", clipsToBounds: Bool = true, tintColor: UIColor? = .orangeColour,isEditable: Bool = false,isScrollEnabled: Bool = false) -> UITextView {
+        let label = UITextView()
+        label.textAlignment = .left
+        label.font = UIFont.font(with: 13, family: FontType.regular)
+        label.textColor = .description_colour
+        label.isEditable = false
+        label.isScrollEnabled = false
+        label.isUserInteractionEnabled = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    static func createStackView(axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment, distribution: UIStackView.Distribution, spacing: CGFloat)-> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = axis
+        stackView.alignment = alignment
+        stackView.distribution = distribution
+        stackView.spacing = spacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }
+    
+   
     
     static func createCollectionViewFlowLayout(scrollDiraction: UICollectionView.ScrollDirection = .vertical  ,itemSize: CGSize = CGSize(width: 10, height: 10), sectionInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), minimumInteritemSpacing: CGFloat = 0, minimumLineSpacing: CGFloat = 0,estimationSize: CGSize = CGSize(width: 0,height: 0)) -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()

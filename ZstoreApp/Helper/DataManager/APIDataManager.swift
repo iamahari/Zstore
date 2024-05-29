@@ -1,10 +1,12 @@
 import Foundation
 
-class ProductApiManager {
-    static let shared = ProductApiManager()
+class APIDataManager {
+    static let shared = APIDataManager()
     
     private let baseUrl = "https://raw.githubusercontent.com/"
     
+    ///  To ftech the product form API
+    /// - Returns: To retuen the result or throws error
     func fetch() async throws -> ProductDetails {
           guard let url = URL(string: "\(baseUrl)princesolomon/zstore/main/data.json") else {
               throw URLError(.badURL)

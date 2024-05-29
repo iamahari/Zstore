@@ -14,9 +14,9 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
     static let identifier = "CashbackCollectionViewCell"
     
     // MARK: create the UI components
-    private let titleLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 16)
+    private let titleLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 15)
     private let subtitleLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 12)
-    private let cashbackLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 16)
+    private let cashbackLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 16,isBold: true)
     private let imageView = AppUIComponents.createImageView(contentMode: .scaleAspectFill)
     private let containerView = AppUIComponents.createView(backgroundColor: .black,cornerRadius: 10 )
     private let overflowView = AppUIComponents.createView(backgroundColor: .clear,clipsToBounds: false)
@@ -59,16 +59,16 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            subtitleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            subtitleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             subtitleLabel.trailingAnchor.constraint(equalTo: overflowView.leadingAnchor, constant: -5)
         ])
         
         cashbackLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            cashbackLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            cashbackLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
             cashbackLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 8),
-            cashbackLabel.trailingAnchor.constraint(equalTo: overflowView.leadingAnchor, constant: -20)
+            cashbackLabel.trailingAnchor.constraint(equalTo: overflowView.leadingAnchor, constant: -10)
         ])
         
         overflowView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +81,7 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.trailingAnchor.constraint(equalTo: overflowView.trailingAnchor, constant: 20), // Adjust the constant for overflow
+            imageView.trailingAnchor.constraint(equalTo: overflowView.trailingAnchor, constant: 20), 
             imageView.centerYAnchor.constraint(equalTo: overflowView.centerYAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 90),
             imageView.heightAnchor.constraint(equalToConstant: 90)

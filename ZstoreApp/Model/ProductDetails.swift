@@ -22,7 +22,6 @@ struct CardOffer: Codable {
     let id, imageURL: String
     let percentage: Double
     let cardName, offerDesc, maxDiscount: String
-//    let imageURL: String
 
     enum CodingKeys: String, CodingKey {
         case id, percentage
@@ -51,16 +50,18 @@ struct Products: Codable {
     let id, name: String
     let rating: Double
     let reviewCount: Int
-        let price: Double
+    let price: Double
     let categoryID, imageURL, description: String
+    let colors: [String]?
     let cardOfferIDS: [String]
-    var isFav = false
+//    var isFav = false
    
 
     enum CodingKeys: String, CodingKey {
         case id, name, rating
         case reviewCount = "review_count"
         case price
+        case colors
         case categoryID = "category_id"
         case cardOfferIDS = "card_offer_ids"
         case imageURL = "image_url"

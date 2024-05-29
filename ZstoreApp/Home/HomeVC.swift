@@ -9,7 +9,7 @@ import UIKit
 
 
 class HomeVC: UIViewController {
-   
+    
     // MARK: Create the UI components
     private let titleBarView: TitleBarView = {
         let view = TitleBarView()
@@ -33,32 +33,10 @@ class HomeVC: UIViewController {
     var categoryCollectionView: UICollectionView!
     var productCollectionView: UICollectionView!
     
-    var filterImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "filter_icon")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    var blurView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .blur_view_color
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
+    private var filterImageView = AppUIComponents.createImageView(image: UIImage(systemName:  "filter_icon"))
+    private var blurView = AppUIComponents.createView(backgroundColor: .blur_view_color)
     var filterView = AppUIComponents.createView(cornerRadius: 23)
-    
-    var filterOptionStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.spacing = 1
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
+    var filterOptionStackView = AppUIComponents.createStackView(axis: .horizontal, alignment: .fill, distribution: .fillEqually, spacing: 1)
     var filterTitleLabel = AppUIComponents.createLabel(text: "Filter Order: From Top to Bottom ",textColor: .description_colour, font: AppFont.font(with: 13, family: FontType.medium))
     var ratingOptionView = AppUIComponents.getFilterOptionView(leftImage: UIImage(named: "rating_icon")!, title: "Rating", rightImage: UIImage(named: "selected_icon")!, tag: 1)
     var priceOptionView = AppUIComponents.getFilterOptionView(leftImage: UIImage(named: "price_icon")!, title: "Price", rightImage: UIImage(named: "unselected_icon")!, tag: 2)
@@ -70,8 +48,6 @@ class HomeVC: UIViewController {
     
     // MARK: Variables
     var layout: WaterfallLayout!
-    
-    
     weak var headerView: OfferCardListView?
     var viewModel = HomeVM()
     
@@ -84,19 +60,22 @@ class HomeVC: UIViewController {
         setupConstraintCatagoryCollectionView()
         setupCollectionView()
         setupViewProductCillectionVIewContraints()
-       
+        
         bindUI()
         changeProductCollectionViewTopConstraint(to: -35)
         setupFilterView()
         Task {
             await viewModel.fetchProductDetailsAPI()
         }
+        FullScreenLoader.shared.startLoading()
+               
+               // Simulate some asynchronous task
+               DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                   // Call stopLoading to hide the loader
+                   FullScreenLoader.shared.stopLoading()
+               }
     }
     
-    func apiCall() async{
-        
-    }
-
     
     //MARK: Setup the constraint
     private func setupCollectionView() {
@@ -126,7 +105,7 @@ class HomeVC: UIViewController {
     
     func setupConstraintCatagoryCollectionView() {
         categoryCollectionView = AppUIComponents.createCollectionView(layout: createCategoryLayoutSection(),dataSource: self, delegate: self,cellClass: CategoryCollectionViewCell.self,
-                 reuseIdentifier: CategoryCollectionViewCell.identifier )
+                                                                      reuseIdentifier: CategoryCollectionViewCell.identifier )
         view.addSubview(categoryCollectionView)
         NSLayoutConstraint.activate([
             categoryCollectionView.topAnchor.constraint(equalTo: titleBarView.bottomAnchor, constant: 12),
@@ -218,7 +197,7 @@ class HomeVC: UIViewController {
             guard let self = self else { return nil }
             
             let item1 = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)))
-
+            
             let containerGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100)), subitems: [item1])
             
             let section = NSCollectionLayoutSection(group: containerGroup)
@@ -239,7 +218,7 @@ class HomeVC: UIViewController {
     
     func createCategoryLayoutSection() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
-
+            
             let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .estimated(30), heightDimension: .absolute(32)))
             item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .none, top: .none, trailing: .fixed(6), bottom: .none)
             
@@ -270,18 +249,6 @@ class HomeVC: UIViewController {
         viewModel.filterByCardOfferID(with: viewModel.selectedCardOffer?.id)
     }
     
-    func setFilterOption(isRating: Bool) {
-        if let leftImageView = ratingOptionView.subviews.first(where: { $0.tag == 1 }) as? UIImageView {
-            leftImageView.image = (isRating) ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
-            print("Rating tapped")
-        }
-        if let leftImageView = priceOptionView.subviews.first(where: { $0.tag == 2 }) as? UIImageView {
-            print("Price tapped")
-            leftImageView.image = (!isRating)  ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
-        }
-        
-    }
-    
     @objc func filterImageTapped() {
         showOrHideFilterView(show: blurView.isHidden)
     }
@@ -293,34 +260,51 @@ class HomeVC: UIViewController {
     
     
     //MARK: Other function
-    func changeProductCollectionViewTopConstraint(to constant: CGFloat) {
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-        }
     
+    /// Changes the top constraint of the product collection view with animation.
+    ///
+    /// - Parameter constant: The new constant value for the top constraint.
+    func changeProductCollectionViewTopConstraint(to constant: CGFloat) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    /// Updates the height of the category collection view based on its content.
     func updateCollectionViewHeight() {
         categoryCollectionView.layoutIfNeeded()
         let contentHeight = categoryCollectionView.collectionViewLayout.collectionViewContentSize.height
         catagoryCollectionViewHeightConstraint.constant = contentHeight
     }
-
-
+    
+    /// Sets the filter option for either rating or price.
+    ///
+    /// - Parameter isRating: A Boolean value indicating whether the filter option is for rating.
+    func setFilterOption(isRating: Bool) {
+        if let leftImageView = ratingOptionView.subviews.first(where: { $0.tag == 1 }) as? UIImageView {
+            leftImageView.image = (isRating) ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
+            print("Rating tapped")
+        }
+        if let leftImageView = priceOptionView.subviews.first(where: { $0.tag == 2 }) as? UIImageView {
+            print("Price tapped")
+            leftImageView.image = (!isRating)  ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
+        }
+    }
+    
+    
 }
 
 
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, WaterfallLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, heightForHeaderInSection section: Int, with width: CGFloat) -> CGFloat {
-           
-            if !viewModel.showCardList {
-                print("Header height >>>>>>>> 0)")
-                return 0
-            } else {
-                print("Header height >>>>>>>> \( 176 + (viewModel.isOfferSelected ? 44 : 0)))")
-                return 176 + (viewModel.isOfferSelected ? 44 : 0)
-            }
+        
+        if !viewModel.showCardList {
+            return 0
+        } else {
+            return 176 + (viewModel.isOfferSelected ? 44 : 0)
         }
+    }
     
     func collectionView(_ collectionView: UICollectionView, heightForItemAt indexPath: IndexPath, with width: CGFloat) -> CGFloat {
         if viewModel.isWaterFallLayout {
@@ -336,7 +320,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         }
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case  self.categoryCollectionView:
@@ -391,51 +375,50 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             cell.configure(with: cardOffer,gradientColor: color )
             return cell
         }
-   
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-            if collectionView == productCollectionView,
-               kind == UICollectionView.elementKindSectionHeader {
-                
-                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: OfferCardListView.reuseIdentifier, for: indexPath) as! OfferCardListView
-                headerView.offerCollectionView.delegate = self
-                headerView.offerCollectionView.dataSource = self                
-                headerView.configureData(data:  viewModel.cardOffers, isOfferAdded: viewModel.isOfferSelected)
-                headerView.applledOfferValueLabel.text = viewModel.selectedCardOffer?.cardName
-                headerView.removeOfferTapped = { view in
-                    self.viewModel.isOfferSelected.toggle()
-                    self.productCollectionView.collectionViewLayout.invalidateLayout()
-                    self.productCollectionView.reloadData()
-                    self.viewModel.filterByCardOfferID(with: nil)
-
-                }
-                self.headerView = headerView
-                print("headerView refreshed ***********************")
-                headerView.isHidden = !viewModel.showCardList
-                return headerView
-            }
-            return UICollectionReusableView()
+        if collectionView == productCollectionView,
+           kind == UICollectionView.elementKindSectionHeader {
             
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: OfferCardListView.reuseIdentifier, for: indexPath) as! OfferCardListView
+            headerView.offerCollectionView.delegate = self
+            headerView.offerCollectionView.dataSource = self
+            headerView.configureData(data:  viewModel.cardOffers, isOfferAdded: viewModel.isOfferSelected)
+            headerView.applledOfferValueLabel.text = viewModel.selectedCardOffer?.cardName
+            headerView.removeOfferTapped = { [weak self] view in
+                self?.viewModel.isOfferSelected.toggle()
+                self?.productCollectionView.collectionViewLayout.invalidateLayout()
+                self?.productCollectionView.reloadData()
+                self?.viewModel.filterByCardOfferID(with: nil)
+                
+            }
+            self.headerView = headerView
+            headerView.isHidden = !viewModel.showCardList
+            return headerView
         }
- 
+        return UICollectionReusableView()
+        
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            
-            switch collectionView {
-            case  self.categoryCollectionView:
-                return .zero
-            default:
-                return viewModel.showCardList ? CGSize(width: view.frame.size.width - 90, height: 130) : .zero
-            }
+        
+        switch collectionView {
+        case  self.categoryCollectionView:
+            return .zero
+        default:
+            return viewModel.showCardList ? CGSize(width: view.frame.size.width - 90, height: 130) : .zero
         }
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
         case categoryCollectionView:
             viewModel.actionOnSelectedCategory(index: indexPath.row)
         case productCollectionView:
-           break
+            break
         default:
             viewModel.isOfferSelected = true
             headerView?.applledOfferValueLabel.text = viewModel.cardOffers?[indexPath.row].cardName
@@ -447,9 +430,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         }
         
         func getHeaderCollectionView() -> OfferCardListView? {
-                guard let headerView = productCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: OfferCardListView.reuseIdentifier, for: IndexPath(row: 0, section: 0)) as? OfferCardListView else { return nil}
-                return headerView
-            }
+            guard let headerView = productCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: OfferCardListView.reuseIdentifier, for: IndexPath(row: 0, section: 0)) as? OfferCardListView else { return nil}
+            return headerView
+        }
     }
 }
 
@@ -460,7 +443,6 @@ extension HomeVC: TitleBarViewDelegate {
         viewModel.filterProductBySearch(with: searchText)
         if !searchText.isEmpty {
             viewModel.showCardList = false
-//            productCollectionView.reloadData()
         }
         
     }
@@ -469,7 +451,6 @@ extension HomeVC: TitleBarViewDelegate {
         viewModel.showCardList = true
         viewModel.searchValue = ""
         viewModel.filterProductBySearch(with: viewModel.searchValue ?? "")
-//        productCollectionView.reloadData()
     }
     
     /// Method to change waterfall or linear layout
@@ -487,33 +468,9 @@ extension HomeVC: TitleBarViewDelegate {
         }
         self.productCollectionView.reloadData()
     }
-
-
+    
+    
 }
-
-//extension HomeVC: OfferListViewDelegate {
-//    func removeSelectedOffer() {
-////        viewModel.selectedCardOffer = nil
-////        viewModel.filterByCardOfferID(with: nil)
-////        self.productCollectionView.collectionViewLayout.invalidateLayout()
-//    }
-//}
-//
-//extension HomeVC: ProductCollectionViewCellDelegate {
-//    
-//    func addOrRemoveFromFavList<T: UICollectionViewCell>(isAdd: Bool, _ cell: T) {
-////        if let indexPath = productCollectionView.indexPath(for: cell) {
-////            viewModel.products?[indexPath.row].isFav.toggle()
-////            productCollectionView.collectionViewLayout.invalidateLayout()
-////            productCollectionView.reloadData()
-////        }
-//    }
-//    
-//    
-//    func addOrRemoveFromFavList(isAdd: Bool,_ cell: WaterFallLayoutCollectionViewCell) {
-//        
-//    }
-//}
 
 
 //MARK: To refresh the UI compenent
@@ -524,21 +481,14 @@ extension HomeVC {
         
         
         viewModel.categorysService.bind { [unowned self] newValue in
-            let (firstValue, secondValue) = newValue
-//            if let selectedIndex = firstValue {
-////                self.categoryCollectionView.reloadData()
-//                self.categoryCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
-//                //                self.filtterCollectionView.reloadData()
-//            }
-//            if let lastSelectedIndex = secondValue {
-//                self.categoryCollectionView.reloadItems(at: [IndexPath(row: lastSelectedIndex, section: 0)])
-//            }
+            //            let (firstValue, secondValue) = newValue
+            
             self.categoryCollectionView.reloadData()
             
             self.updateCollectionViewHeight()
         }
         
-        viewModel.cardOfferSerview.bind { [self] cardOffer in
+        viewModel.cardOfferSerview.bind { [unowned self] cardOffer in
             guard let cardOffer = cardOffer else {
                 changeProductCollectionViewTopConstraint(to: -30)
                 containerView.isHidden = true
@@ -558,31 +508,34 @@ extension HomeVC {
             }
             
         }
-      
+        
         viewModel.apiService.bind { [unowned self] in
+            var loader: FullScreenLoader?
             switch $0 {
-            
             case .loading:
                 print("Start Loading")
+                DispatchQueue.main.async {
+                    loader?.startLoading()
+                }
+                
             case .populated:
                 DispatchQueue.main.async {
                     self.categoryCollectionView.reloadData()
                 }
             case .error(let error):
-                showErrorAlert(message: error)
                 print("Fascing the error")
-              
+                
             }
         }
         
     }
     
     func showErrorAlert(message: String) {
-            let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertController.addAction(okAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-        }
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

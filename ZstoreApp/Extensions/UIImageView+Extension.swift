@@ -5,11 +5,14 @@
 //  Created by Hari Prakash on 26/05/24.
 //
 
-import Foundation
 import UIKit
 
 
 extension UIImageView {
+    
+    
+    /// To load the url image and store to catch image also
+    /// - Parameter url: image URl
     func loadImage(from url: URL) {
         let cacheKey = url.absoluteString
         
@@ -19,7 +22,6 @@ extension UIImageView {
             return
         }
         
-        // Create and add a UIActivityIndicatorView
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.startAnimating()
@@ -29,10 +31,8 @@ extension UIImageView {
             activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
-        // Download image from URL
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             DispatchQueue.main.async {
-                // Remove the activity indicator
                 activityIndicator.removeFromSuperview()
             }
             
@@ -40,10 +40,8 @@ extension UIImageView {
                 return
             }
             
-            // Cache the downloaded image
-            ImageCache.shared.setImage(downloadedImage, forKey: cacheKey)
-            
-            // Update the UIImageView on the main thread
+            ImageCache.shared.setImage(downloadedImage, forKey: cacheKey)// Cache the downloaded image
+    
             DispatchQueue.main.async {
                 self.image = downloadedImage
             }
@@ -53,8 +51,7 @@ extension UIImageView {
 }
 
 
-import UIKit
-
+/// To store the catch image
 class ImageCache {
     static let shared = ImageCache()
     private init() {}

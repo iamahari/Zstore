@@ -26,6 +26,8 @@ class CoreDataManager  {
 extension CoreDataManager {
     
     
+    /// To fetch the all data form muliple entities
+    /// - Returns: Retuen tubles data it's containse product,crad offer, categories
     func fetch() async throws -> ProductDetailsType {
             let data = try await getProducts()
             return data
@@ -54,7 +56,12 @@ extension CoreDataManager {
 
     
     
-    func fetchProductById(byID id: String,_ isRating: Bool) -> [ProductsList]? {
+    /// Fetches products by category ID.
+    /// - Parameters:
+    ///   - id: The ID of the category to filter products by.
+    ///   - isRating: Boolean indicating if the products should be sorted by rating (true) or by price (false).
+    /// - Returns: An array of `ProductsList` objects if fetch is successful, otherwise nil.
+    func fetchProductById(byID id: String, _ isRating: Bool) -> [ProductsList]? {
         let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "categoryId == %@", id)
         
@@ -65,7 +72,6 @@ extension CoreDataManager {
             let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
             fetchRequest.sortDescriptors = [sortDescriptor]
         }
-        
         do {
             let results = try context.fetch(fetchRequest)
             return results
@@ -74,8 +80,14 @@ extension CoreDataManager {
             return nil
         }
     }
-    
-    func fetchProductByName(with productName: String,byID id: String,_ isRating: Bool) -> [ProductsList]? {
+
+    /// Fetches products by name and category ID.
+    /// - Parameters:
+    ///   - productName: The name of the product to filter by.
+    ///   - id: The ID of the category to filter products by.
+    ///   - isRating: Boolean indicating if the products should be sorted by rating (true) or by price (false).
+    /// - Returns: An array of `ProductsList` objects if fetch is successful, otherwise nil.
+    func fetchProductByName(with productName: String, byID id: String, _ isRating: Bool) -> [ProductsList]? {
         let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
         let categoryPredicate = NSPredicate(format: "categoryId == %@", id)
         let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", productName)
@@ -88,26 +100,26 @@ extension CoreDataManager {
             let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
             fetchRequest.sortDescriptors = [sortDescriptor]
         }
-        
-        
-//        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-        
         do {
             let results = try context.fetch(fetchRequest)
             return results
         } catch {
-            print("Failed to fetch products by id: \(error)")
+            print("Failed to fetch products by name: \(error)")
             return nil
         }
     }
-    
-    func fetchCardOfferById(with cardOfferId: String,byID id: String,_ isRating: Bool) -> [ProductsList]? {
+
+    /// Fetches products by card offer ID and category ID.
+    /// - Parameters:
+    ///   - cardOfferId: The ID of the card offer to filter by.
+    ///   - id: The ID of the category to filter products by.
+    ///   - isRating: Boolean indicating if the products should be sorted by rating (true) or by price (false).
+    /// - Returns: An array of `ProductsList` objects if fetch is successful, otherwise nil.
+    func fetchCardOfferById(with cardOfferId: String, byID id: String, _ isRating: Bool) -> [ProductsList]? {
         let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
-        
         let categoryPredicate = NSPredicate(format: "categoryId == %@", id)
         let cardOfferPredicate = NSPredicate(format: "cardOfferId CONTAINS[cd] %@", cardOfferId)
-        let combinedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:[categoryPredicate,cardOfferPredicate])
+        let combinedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, cardOfferPredicate])
         if isRating {
             let sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
             fetchRequest.sortDescriptors = [sortDescriptor]
@@ -115,21 +127,25 @@ extension CoreDataManager {
             let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
             fetchRequest.sortDescriptors = [sortDescriptor]
         }
-        
-
         fetchRequest.predicate = combinedPredicate
         
         do {
             let results = try context.fetch(fetchRequest)
-            print(results,"res",results.count)
+            print(results, "res", results.count)
             return results
         } catch {
             print("Failed to fetch products by cardOfferId: \(error)")
             return nil
         }
     }
-    
-    func updateIsFav(for productId: String, to isFav: Bool,_ isRating: Bool) -> String? {
+
+    /// Updates the favorite status of a product.
+    /// - Parameters:
+    ///   - productId: The ID of the product to update.
+    ///   - isFav: The new favorite status.
+    ///   - isRating: Boolean indicating if the products should be sorted by rating (true) or by price (false).
+    /// - Returns: A string indicating success or error message.
+    func updateIsFav(for productId: String, to isFav: Bool, _ isRating: Bool) -> String? {
         let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", productId)
         if isRating {
@@ -139,8 +155,7 @@ extension CoreDataManager {
             let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
             fetchRequest.sortDescriptors = [sortDescriptor]
         }
-        
-        
+
         do {
             let results = try context.fetch(fetchRequest)
             
@@ -149,7 +164,7 @@ extension CoreDataManager {
                 try context.save()
                 return ""
             } else {
-                return "No product found product ID"
+                return "No product found for product ID"
             }
         } catch {
             return "Failed to fetch or update product"
@@ -164,8 +179,10 @@ extension CoreDataManager {
 
 
 
-//MARK: To store the value api value to local
+// MARK: Store the API value to Core Data
 extension CoreDataManager {
+    
+    
     func storeProducts(productData : ProductDetails){
         
         if let offers = productData.cardOffers{
@@ -192,6 +209,7 @@ extension CoreDataManager {
             let products = ProductsList(context: context)
             products.id = product.id
             products.cardOfferId = product.cardOfferIDS.joined(separator: ",")
+            products.colors = product.colors?.joined(separator: ",")
             products.categoryId = product.categoryID
             products.productDescription = product.description
             products.imageUrl = product.imageURL

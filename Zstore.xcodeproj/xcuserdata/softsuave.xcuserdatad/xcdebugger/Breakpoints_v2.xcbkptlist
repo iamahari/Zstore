@@ -7,47 +7,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "22008FC4-FC3A-4A69-9699-D9104457394C"
+            uuid = "04DDC4B8-86D5-491F-A9FF-79196E979EC5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZstoreApp/Helper/DataManager/ProductApiManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "fetch()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "99401182-F2D7-4F8E-B2C2-A6CCF3669B24"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZstoreApp/Helper/DataManager/CoreDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "storeProducts(products:)"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
+            landmarkName = "storeProducts(productData:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "22008FC4-FC3A-4A69-9699-D9104457394C - 5a88e6ae19ffba5b"
+                  uuid = "99401182-F2D7-4F8E-B2C2-A6CCF3669B24 - 7b8ccedc6287ecd1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Zstore.Category) -&gt; () in Zstore.CoreDataManager.storeCategories(category: Swift.Array&lt;Zstore.Category&gt;) -&gt; ()"
+                  symbolName = "Zstore.CoreDataManager.storeProducts(productData: Zstore.ProductDetails) -&gt; ()"
                   moduleName = "Zstore"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/softsuave/Documents/Zstore/ZstoreApp/Helper/DataManager/CoreDataManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "192"
-                  endingLineNumber = "192"
-                  offsetFromSymbolStart = "96">
+                  startingLineNumber = "166"
+                  endingLineNumber = "166"
+                  offsetFromSymbolStart = "124">
                </Location>
                <Location
-                  uuid = "22008FC4-FC3A-4A69-9699-D9104457394C - 8f94a9a548d4a271"
+                  uuid = "99401182-F2D7-4F8E-B2C2-A6CCF3669B24 - 7b8ccedc6287ebeb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Zstore.Products) -&gt; () in Zstore.CoreDataManager.storeProducts(products: Swift.Array&lt;Zstore.Products&gt;) -&gt; ()"
+                  symbolName = "Zstore.CoreDataManager.storeProducts(productData: Zstore.ProductDetails) -&gt; ()"
                   moduleName = "Zstore"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/softsuave/Documents/Zstore/ZstoreApp/Helper/DataManager/CoreDataManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "192"
-                  endingLineNumber = "192"
-                  offsetFromSymbolStart = "160">
+                  startingLineNumber = "188"
+                  endingLineNumber = "188"
+                  offsetFromSymbolStart = "124">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -55,17 +71,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CCBF3C81-407A-4A5A-93EC-EC8F90190788"
+            uuid = "137E0C4E-ABFD-4F6B-8B98-A8ACDA3C1822"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZstoreApp/Helper/DataManager/ProductApiManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "fetch()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2DAB256C-7908-4539-8F8F-52F52947B024"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZstoreApp/Helper/DataManager/CoreDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "storeProducts(products:)"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "storeProducts(productData:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2DAB256C-7908-4539-8F8F-52F52947B024 - 7b8ccedc6287ed30"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Zstore.CoreDataManager.storeProducts(productData: Zstore.ProductDetails) -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/Zstore/ZstoreApp/Helper/DataManager/CoreDataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "2DAB256C-7908-4539-8F8F-52F52947B024 - 7b8ccedc6287ebca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Zstore.CoreDataManager.storeProducts(productData: Zstore.ProductDetails) -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/Zstore/ZstoreApp/Helper/DataManager/CoreDataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "180">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

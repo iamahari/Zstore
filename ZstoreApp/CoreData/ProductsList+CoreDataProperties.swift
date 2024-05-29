@@ -2,7 +2,7 @@
 //  ProductsList+CoreDataProperties.swift
 //  Zstore
 //
-//  Created by Hari Prakash on 28/05/24.
+//  Created by Hari Prakash on 29/05/24.
 //
 //
 
@@ -20,12 +20,13 @@ extension ProductsList {
     @NSManaged public var categoryId: String?
     @NSManaged public var id: String?
     @NSManaged public var imageUrl: String?
+    @NSManaged public var isFav: Bool
     @NSManaged public var name: String?
     @NSManaged public var price: Double
     @NSManaged public var productDescription: String?
     @NSManaged public var rating: Double
     @NSManaged public var reviewCount: Int64
-    @NSManaged public var isFav: Bool
+    @NSManaged public var colors: String?
 
 }
 

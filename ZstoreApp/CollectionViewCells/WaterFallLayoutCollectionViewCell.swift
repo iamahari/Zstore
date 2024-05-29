@@ -13,144 +13,38 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "WaterFallLayoutCollectionViewCell"
     
     
-   
-    //--------- Top Image View -----------//
-    let productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-        
-    }()
-    
-    let favoriteImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "favorite_icon")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        return imageView
-        
-    }()
-    
-    //---------- Add to Fav --------------//
-    
-    let addToFavButtonView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let favButtonView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let heartImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "heart_icon")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        return imageView
-        
-    }()
-    
-    
-    let favButtonTextLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        label.textColor = .fav_button_text_color
-        label.text = "Add to Fav"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    //------------ info view ------------//
-    let infoStackView: UIStackView = {
-        let verticalStackView = UIStackView()
-        verticalStackView.axis = .vertical
-        verticalStackView.alignment = .fill
-        verticalStackView.distribution = .fill
-        verticalStackView.spacing = 4
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        return verticalStackView
-    }()
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font =  UIFont.font(with: 18, family: FontType.medium)
-        label.textColor = .black_colour
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+    // MARK: Create the UI components
+    lazy var productImageView = AppUIComponents.createImageView(image: UIImage(named: "favorite_icon"),contentMode: .scaleAspectFill)
+    lazy var favoriteImageView = AppUIComponents.createImageView(image: UIImage(named: "favorite_icon"),contentMode: .scaleAspectFit)
+    lazy var addToFavButtonView = AppUIComponents.createView()
+    lazy var favButtonView = AppUIComponents.createView()
+    lazy var heartImageView = AppUIComponents.createImageView(image:  UIImage(named: "heart_icon"),contentMode: .scaleAspectFill)
+    lazy var favButtonTextLabel = AppUIComponents.createLabel(text:"Add to Fav",textColor: .fav_button_text_color, textAlignment: .left,font:  UIFont.systemFont(ofSize: 13, weight: .semibold))
+    let infoStackView = AppUIComponents.createStackView(axis: .vertical, alignment: .fill, distribution: .fill, spacing: 4)
+    lazy var titleLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font:  UIFont.font(with: 18, family: FontType.medium))
+
     let ratingVew: RatingView = {
         let view = RatingView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    //----------Price container View---------//
-    let priceContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let priceLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = UIFont.font(with: 20, family: FontType.semibold)
-        label.textColor = .black_colour
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let oldPriceLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = UIFont.font(with: 13, family: FontType.regular)
-        label.textColor = .gray_color
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = UIFont.font(with: 13, family: FontType.regular)
-        label.textColor = .description_colour
-        label.numberOfLines = 0
-        label.isUserInteractionEnabled = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    
-    
-    let savedPriceButton: UIButton = {
-        let button = UIButton()
-        var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = .green_colour
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8)
-        button.configuration = configuration
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.font(with: 13, family: FontType.medium)
-        button.titleLabel?.textColor = .white_colour
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.isUserInteractionEnabled = false
-        return button
-    }()
-
+    lazy var priceContainerView = AppUIComponents.createView()
+    lazy var priceLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font:  UIFont.font(with: 18, family: FontType.medium))
+    lazy var oldPriceLabel = AppUIComponents.createLabel(text:"",textColor:  .gray_color, textAlignment: .left,font:  UIFont.font(with: 13, family: FontType.regular))
+    lazy var descriptionLabel = AppUIComponents.createLabel(text:"",textColor:  .description_colour, textAlignment: .left,font: UIFont.font(with: 13, family: FontType.regular))
+    let savedPriceButton = CustomButton(backgroundColor: .green_colour,
+                                         titleAlignment: .center,
+                                         titleFont: UIFont.font(with: 11, family: FontType.medium),
+                                         titleColor: .white_colour,
+                                         contentInsets: NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8),
+                                         isUserInteractionEnabled: false)
     
     //MARK: Variables
-    var actionOnCallBack: ((Bool) -> Void)?
     var indexPath: IndexPath?
+    
+    //MARK: Callback
+    var actionOnCallBack: ((Bool) -> Void)?
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -186,7 +80,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         
         addToFavButtonView.setCornerRadius(radius: 10)
         addToFavButtonView.setBorder(borderWidth: 1, color: .fav_button_border_color)
-        showOrDismissFavoriteButtonView(show: !(true ?? false))
         savedPriceButton.setCornerRadius(radius: 11)
         productImageView.clipsToBounds = true
         
@@ -206,10 +99,9 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -10),
             infoStackView.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 12),
             infoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-//
+            
             addToFavButtonView.leadingAnchor.constraint(equalTo: favButtonView.leadingAnchor,constant: 0),
             addToFavButtonView.topAnchor.constraint(equalTo: favButtonView.topAnchor, constant: 6),
-//            addToFavButtonView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor,constant: 0),
             addToFavButtonView.bottomAnchor.constraint(equalTo: favButtonView.bottomAnchor, constant: -6),
             
             heartImageView.topAnchor.constraint(equalTo: addToFavButtonView.topAnchor, constant:  6),
@@ -225,9 +117,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             titleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 88),
             
             ratingVew.heightAnchor.constraint(equalToConstant: 18),
-//            favButtonView.heightAnchor.constraint(equalToConstant: 36),
-//            savedPriceButton.heightAnchor.constraint(equalToConstant: 22),
-            
             
             priceLabel.leadingAnchor.constraint(equalTo: priceContainerView.leadingAnchor),
             priceLabel.topAnchor.constraint(equalTo: priceContainerView.topAnchor, constant: 0),
@@ -252,10 +141,15 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         let addFavTapGesture = UITapGestureRecognizer(target: self, action: #selector(addFavorite))
         addToFavButtonView.addGestureRecognizer(addFavTapGesture)
         
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_:)))
-//        descriptionLabel.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_:)))
+        descriptionLabel.addGestureRecognizer(tapGesture)
     }
     
+    /// Updates the cell UI with product details and card offers.
+    ///
+    /// - Parameters:
+    ///   - product: The `ProductsList` object containing product details.
+    ///   - selectedCardOffer: The `CardOffers` object representing the selected card offer.
     func updateCell(product: ProductsList,with selectedCardOffer: CardOffers?) {
         if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
@@ -280,16 +174,23 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         
     }
     
+    
+    //MARK: Button Actions
+    
+    /// Remove  the favorite action callback.
     @objc func dismissFavorite() {
         actionOnCallBack?(false)
     }
-    
+
+    /// Adds the favorite action callback.
     @objc func addFavorite() {
         actionOnCallBack?(true)
     }
-    
+
+    /// Handles tap gestures on UILabels to open URLs if available in attributed text.
+    ///
+    /// - Parameter gesture: The UITapGestureRecognizer instance.
     @objc private func didTapLabel(_ gesture: UITapGestureRecognizer) {
-        //todo
         guard let label = gesture.view as? UILabel else { return }
         let text = label.attributedText?.string ?? ""
         
@@ -304,7 +205,12 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+
+    //MARK: Other function
     
+    /// Shows or dismisses the favorite button view.
+    ///
+    /// - Parameter show: A Boolean value indicating whether to show the favorite button view. Default is `true`.
     func showOrDismissFavoriteButtonView(show: Bool = true) {
         favoriteImageView.isHidden = show
         favButtonView.isHidden = !show
