@@ -54,13 +54,17 @@ extension CoreDataManager {
 
     
     
-    func fetchProductById(byID id: String) -> [ProductsList]? {
+    func fetchProductById(byID id: String,_ isRating: Bool) -> [ProductsList]? {
         let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "categoryId == %@", id)
         
-        
-        let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        if isRating {
+            let sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        } else {
+            let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        }
         
         do {
             let results = try context.fetch(fetchRequest)
@@ -71,15 +75,23 @@ extension CoreDataManager {
         }
     }
     
-    func fetchProductByName(with productName: String,byID id: String) -> [ProductsList]? {
+    func fetchProductByName(with productName: String,byID id: String,_ isRating: Bool) -> [ProductsList]? {
         let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
         let categoryPredicate = NSPredicate(format: "categoryId == %@", id)
         let namePredicate = NSPredicate(format: "name CONTAINS[cd] %@", productName)
         let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, namePredicate])
         fetchRequest.predicate = compoundPredicate
+        if isRating {
+            let sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        } else {
+            let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        }
         
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+//        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+//        fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
             let results = try context.fetch(fetchRequest)
@@ -90,12 +102,20 @@ extension CoreDataManager {
         }
     }
     
-    func fetchCardOfferById(with cardOfferId: String,byID id: String) -> [ProductsList]? {
+    func fetchCardOfferById(with cardOfferId: String,byID id: String,_ isRating: Bool) -> [ProductsList]? {
         let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
         
         let categoryPredicate = NSPredicate(format: "categoryId == %@", id)
         let cardOfferPredicate = NSPredicate(format: "cardOfferId CONTAINS[cd] %@", cardOfferId)
         let combinedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:[categoryPredicate,cardOfferPredicate])
+        if isRating {
+            let sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        } else {
+            let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        }
+        
 
         fetchRequest.predicate = combinedPredicate
         
@@ -109,30 +129,33 @@ extension CoreDataManager {
         }
     }
     
-    //    func fetchItemsFormFolder(folderId: Int64) -> [FolderContainerItem] {
-    //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
-    //
-    //        let viewContext = appDelegate.persistentContainer.viewContext
-    //
-    //        let fetchRequest = NSFetchRequest<FolderContainerEntity>(entityName: "FolderContainerEntity")
-    //
-    //        let predicate = NSPredicate(format: "id == %@", "\(folderId)")
-    //        fetchRequest.predicate = predicate
-    //
-    //        do {
-    //            let folders = try viewContext.fetch(fetchRequest)
-    //            let data = folders.map { item in
-    //                FolderContainerItem(id: item.id, path: item.path ?? "",type: item.type ?? "", name: item.name ?? "")
-    //
-    //            }
-    //            return data
-    //
-    //        } catch let error as NSError {
-    //            print("Data fetch failed",error)
-    //        }
-    //
-    //        return []
-    //    }
+    func updateIsFav(for productId: String, to isFav: Bool,_ isRating: Bool) -> String? {
+        let fetchRequest: NSFetchRequest<ProductsList> = ProductsList.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", productId)
+        if isRating {
+            let sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        } else {
+            let sortDescriptor = NSSortDescriptor(key: "price", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+        }
+        
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            if let product = results.first {
+                product.isFav = isFav
+                try context.save()
+                return ""
+            } else {
+                return "No product found product ID"
+            }
+        } catch {
+            return "Failed to fetch or update product"
+        }
+    }
+
     
 }
 

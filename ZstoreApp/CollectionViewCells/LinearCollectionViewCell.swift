@@ -11,7 +11,7 @@ class LinearCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "LinearCollectionViewCell"
     
-    weak var delegate: ProductCollectionViewCellDelegate?
+//    weak var delegate: ProductCollectionViewCellDelegate?
     
     
    
@@ -115,7 +115,7 @@ class LinearCollectionViewCell: UICollectionViewCell {
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8)
         button.configuration = configuration
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.font(with: 13, family: FontType.medium)
+        button.titleLabel?.font = UIFont.font(with: 11, family: FontType.medium)
         button.titleLabel?.textColor = .white_colour
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isUserInteractionEnabled = false
@@ -140,23 +140,23 @@ class LinearCollectionViewCell: UICollectionViewCell {
     }()
     
     
-    var product: Products? {
-      didSet {
-        if let product = product {
-//            productImageView.image = UIImage(named:  product.image)
-//            titleLabel.text = product.name
-//            priceLabel.text = product.currentPrice
-//            oldPriceLabel.attributedText = Utils.markText(product.oldPrice)
-//            savedPriceButton.setTitle( "Save \(product.discount)", for: .normal)
-//            descriptionLabel.attributedText = Utils.getModifiedString(product.deliveryInfo)
-//            setupColorsView(colors: product.colors)
-//            ratingVew.addRatingsDetails(with: product)
-//            savedPriceButton.isHidden = !product.showDiscontCount
-//            oldPriceLabel.isHidden = !product.showDiscontCount
-        }
-      }
-    }
-    
+//    var product: Products? {
+//      didSet {
+//        if let product = product {
+////            productImageView.image = UIImage(named:  product.image)
+////            titleLabel.text = product.name
+////            priceLabel.text = product.currentPrice
+////            oldPriceLabel.attributedText = Utils.markText(product.oldPrice)
+////            savedPriceButton.setTitle( "Save \(product.discount)", for: .normal)
+////            descriptionLabel.attributedText = Utils.getModifiedString(product.deliveryInfo)
+////            setupColorsView(colors: product.colors)
+////            ratingVew.addRatingsDetails(with: product)
+////            savedPriceButton.isHidden = !product.showDiscontCount
+////            oldPriceLabel.isHidden = !product.showDiscontCount
+//        }
+//      }
+//    }
+//    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -205,8 +205,6 @@ class LinearCollectionViewCell: UICollectionViewCell {
             
             ratingVew.heightAnchor.constraint(equalToConstant: 18),
             
-//            descriptionLabel.heightAnchor.constraint(equalToConstant: 22),
-
             
             priceLabel.leadingAnchor.constraint(equalTo: priceContainerView.leadingAnchor),
             priceLabel.topAnchor.constraint(equalTo: priceContainerView.topAnchor, constant: 0),
@@ -229,20 +227,33 @@ class LinearCollectionViewCell: UICollectionViewCell {
 
     }
     
-    func updateCell(product: ProductsList) {
+    func updateCell(product: ProductsList,with selectedCardOffer: CardOffers?) {
         if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
         }
         titleLabel.text = product.name
-        priceLabel.text = String(product.price)
-        oldPriceLabel.attributedText = Utils.markText(String(product.price))
-        savedPriceButton.setTitle( "Save \(5)", for: .normal)
+        priceLabel.text = String(Utils.formatAsIndianCurrency(product.price) ?? "")
         descriptionLabel.attributedText = Utils.getModifiedString(product.productDescription ?? "")
         ratingVew.addRatingsDetails(with: product)
 //        showOrDismissFavoriteButtonView(show: !(false))
-        savedPriceButton.isHidden = !true
-        oldPriceLabel.isHidden = !true
+        isOfferApplied(isApplied: true)
+        
+        guard let selectedCardOffer = selectedCardOffer else{return}
+        oldPriceLabel.attributedText = Utils.markText(Utils.formatAsIndianCurrency(product.price) ?? "")
+        priceLabel.text = String(Utils.calculateDiscountedPrice(product.price, selectedCardOffer.percentage))
+        savedPriceButton.setTitle( "Save \(Utils.calculateDiscountSevedPrice(product.price, selectedCardOffer.percentage))", for: .normal)
+        isOfferApplied(isApplied: false)
+       
     }
+    
+   
+    
+    func isOfferApplied(isApplied: Bool) {
+        oldPriceLabel.isHidden = isApplied
+        savedPriceButton.isHidden = isApplied
+        
+    }
+
     
     private func setupColorsView(colors: [String]) {
         colorsStackView.subviews.forEach({ $0.removeFromSuperview()})

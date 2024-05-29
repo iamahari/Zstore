@@ -10,7 +10,7 @@ import UIKit
 
 
 class Utils {
-    
+        
     static func getModifiedString(_ originalString: String) -> NSAttributedString? {
         print("originalString >>>>> \(originalString)")
         var cleanedString = originalString
@@ -53,7 +53,7 @@ class Utils {
     }
     
     static func getBoldAndLinkText(_ input: String) -> (String, String, String) {
-        let attributedString = NSMutableAttributedString(string: "")
+        _ = NSMutableAttributedString(string: "")
         
         let boldPattern = "\\*\\*(.*?)\\*\\*"
         let linkPattern = "\\[(.*?)\\]\\((.*?)\\)"
@@ -109,5 +109,31 @@ class Utils {
     }
     
     
+    static func formatAsIndianCurrency(_ amount: Double) -> String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "en_IN")
+        formatter.currencySymbol = "₹"
+        formatter.maximumFractionDigits = 0 // Ensure no decimal places are shown
+
+        // Round the double value to the nearest integer
+        let roundedAmount = round(amount)
+
+        // Format the rounded value as a currency string
+        if let roundedCurrencyString = formatter.string(from: NSNumber(value: roundedAmount)) {
+            return roundedCurrencyString
+        }
+        return nil
+    }
+   static func calculateDiscountedPrice(_ originalPrice: Double, _ discountPercentage: Double) -> String {
+        let discountAmount = originalPrice * (discountPercentage / 100)
+        let finalPrice = originalPrice - discountAmount
+       return formatAsIndianCurrency(finalPrice.rounded()) ?? ""
+    }
+    
+    static func calculateDiscountSevedPrice(_ originalPrice: Double, _ discountPercentage: Double) -> String {
+        let savedPrice = originalPrice * (discountPercentage / 100)
+        return formatAsIndianCurrency(savedPrice.rounded()) ?? ""
+    }
 
 }

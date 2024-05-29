@@ -12,7 +12,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "WaterFallLayoutCollectionViewCell"
     
-    weak var delegate: ProductCollectionViewCellDelegate?
     
    
     //--------- Top Image View -----------//
@@ -149,23 +148,10 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     }()
 
     
-    var product: Products? {
-      didSet {
-        if let product = product {
-//            productImageView.image = UIImage(named:  product.image)
-//            titleLabel.text = product.name
-//            priceLabel.text = product.currentPrice
-//            oldPriceLabel.attributedText = Utils.markText(product.oldPrice)
-//            savedPriceButton.setTitle( "Save \(product.discount)", for: .normal)
-//            descriptionLabel.attributedText = Utils.getModifiedString(product.deliveryInfo)
-//            ratingVew.addRatingsDetails(with: product)
-//            showOrDismissFavoriteButtonView(show: !(product.isFav))
-//            savedPriceButton.isHidden = !product.showDiscontCount
-//            oldPriceLabel.isHidden = !product.showDiscontCount
-        }
-      }
-    }
-    
+    //MARK: Variables
+    var actionOnCallBack: ((Bool) -> Void)?
+    var indexPath: IndexPath?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -203,8 +189,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         showOrDismissFavoriteButtonView(show: !(true ?? false))
         savedPriceButton.setCornerRadius(radius: 11)
         productImageView.clipsToBounds = true
-//        oldPriceLabel.isHidden = true
-//        savedPriceButton.isHidden = false
         
         NSLayoutConstraint.activate([
             
@@ -272,27 +256,36 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
 //        descriptionLabel.addGestureRecognizer(tapGesture)
     }
     
-    func updateCell(product: ProductsList) {
+    func updateCell(product: ProductsList,with selectedCardOffer: CardOffers?) {
         if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
         }
         titleLabel.text = product.name
-        priceLabel.text = String(product.price)
+        priceLabel.text = String(Utils.formatAsIndianCurrency(product.price) ?? "")
         oldPriceLabel.attributedText = Utils.markText(String(product.price))
-        savedPriceButton.setTitle( "Save \(5)", for: .normal)
         descriptionLabel.attributedText = Utils.getModifiedString(product.productDescription ?? "")
         ratingVew.addRatingsDetails(with: product)
-        showOrDismissFavoriteButtonView(show: !(false))
-        savedPriceButton.isHidden = !false
-        oldPriceLabel.isHidden = !false
+        isOfferApplied(isApplied: true)
+        showOrDismissFavoriteButtonView(show: !product.isFav)
+        guard let selectedCardOffer = selectedCardOffer else{return}
+        oldPriceLabel.attributedText = Utils.markText(Utils.formatAsIndianCurrency(product.price) ?? "")
+        priceLabel.text = String(Utils.calculateDiscountedPrice(product.price, selectedCardOffer.percentage))
+        savedPriceButton.setTitle( "Save \(Utils.calculateDiscountSevedPrice(product.price, selectedCardOffer.percentage))", for: .normal)
+        isOfferApplied(isApplied: false)
+    }
+    
+    func isOfferApplied(isApplied: Bool) {
+        oldPriceLabel.isHidden = isApplied
+        savedPriceButton.isHidden = isApplied
+        
     }
     
     @objc func dismissFavorite() {
-        delegate?.addOrRemoveFromFavList(isAdd: false, self)
+        actionOnCallBack?(false)
     }
     
     @objc func addFavorite() {
-        delegate?.addOrRemoveFromFavList(isAdd: true, self)
+        actionOnCallBack?(true)
     }
     
     @objc private func didTapLabel(_ gesture: UITapGestureRecognizer) {

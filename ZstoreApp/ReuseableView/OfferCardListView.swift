@@ -36,7 +36,7 @@ class OfferCardListView: UICollectionReusableView{
     
     // MARK: delegate and callback
     
-    weak var delegate: OfferListViewDelegate?
+//    weak var delegate: OfferListViewDelegate?
     var removeOfferTapped: ((OfferCardListView) -> Void?)?
     
     override init(frame: CGRect) {
@@ -135,7 +135,6 @@ class OfferCardListView: UICollectionReusableView{
         print("Removed offer")
         removeOfferTapped?(self)
         setOfferViewConstraint(isOfferAdded: false)
-        delegate?.removeSelectedOffer()
     }
     
     

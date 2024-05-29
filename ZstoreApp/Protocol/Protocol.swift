@@ -9,9 +9,9 @@ import Foundation
 
 import UIKit
 
-protocol OfferListViewDelegate: AnyObject {
-    func removeSelectedOffer()
-}
+//protocol OfferListViewDelegate: AnyObject {
+//    func removeSelectedOffer()
+//}
 
 protocol FontFamily {
     var value: String { get }
@@ -22,9 +22,9 @@ protocol WaterfallLayoutDelegate: AnyObject {
     func collectionView(_ collectionView: UICollectionView, heightForHeaderInSection section: Int, with width: CGFloat) -> CGFloat
 }
 
-protocol ProductCollectionViewCellDelegate: AnyObject {
-    func addOrRemoveFromFavList<T: UICollectionViewCell>(isAdd: Bool,_ cell: T)
-}
+//protocol ProductCollectionViewCellDelegate: AnyObject {
+//    func addOrRemoveFromFavList<T: UICollectionViewCell>(isAdd: Bool,_ cell: T)
+//}
 
 protocol TitleBarViewDelegate: AnyObject {
     func didUpdateSearchResults(_ searchText: String)

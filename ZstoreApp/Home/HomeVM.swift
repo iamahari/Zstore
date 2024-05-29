@@ -15,6 +15,7 @@ class HomeVM {
     var categorysService =  Box<IntPair>((0,0))
     var cardOfferSerview = Box<CardOffers?>(nil)
     var productSerview = Box<Bool>(false)
+    var isFilterByRating = true
     
     
     var listOfGradientColor = [[UIColor(hex: "#1A7EDA").cgColor, UIColor(hex: "#2BD1FF").cgColor],
@@ -24,19 +25,14 @@ class HomeVM {
     
     
     var isWaterFallLayout = true
+    var isOfferSelected = false
+    var showCardList = true
     var coredate = CoreDataManager.shared
     var selectedCategoryIndex = 0
-    
-//    var allProducts: [ProductsList]?
-    
     var products: [ProductsList]?
-    
     var categorys: [CategoryList]?
     var cardOffers: [CardOffers]?
-    
     var selectedCardOffer: CardOffers?
-//    var selectedCategorys: Category?
-//    var selectedProduct: [Products]?
     var searchValue = ""
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -48,7 +44,8 @@ class HomeVM {
         categorysService.value = (selectedCategoryIndex, lastSelectedIndex)
        
         self.isWaterFallLayout = categorys?[index].layout == "waterfall"
-        categoryFilteredProduct(categoryId: categorys?[index].id ?? "100023")
+        filterByCardOfferID(with: selectedCardOffer?.id)
+//        categoryFilteredProduct(categoryId: categorys?[index].id ?? "100023")
     }
     
     func actionOnSelectedOfferCard(_ cardOffer: CardOffers){
@@ -59,44 +56,61 @@ class HomeVM {
     
     /// Filters the products based on the user input and updates the `products`
     /// - Parameter userInput: The search text entered by the user.
-    func filterProducts(with userInput: String) {
+    func filterProductBySearch(with userInput: String) {
         searchValue = userInput
         
         if userInput.isEmpty {
-            categoryFilteredProduct(categoryId: categorys?[selectedCategoryIndex].id ?? "100023")
+            showCardList = true
+            filterByCardOfferID(with: selectedCardOffer?.id)
+//            categoryFilteredProduct(categoryId: categorys?[selectedCategoryIndex].id ?? "100023")
+            
+            
         }else{
-            if let products = coredate.fetchProductByName(with: userInput,byID: categorys?[selectedCategoryIndex].id ?? "") {
+            if let products = coredate.fetchProductByName(with: userInput,byID: categorys?[selectedCategoryIndex].id ?? "",isFilterByRating) {
                 self.products = products
                 productSerview.value = true
+                showCardList = false
            }else{
-               print("Z")
+               apiService.value = .error("Product not found.")
            }
         }
         categorysService.value = (selectedCategoryIndex, nil)
     }
     
     func categoryFilteredProduct(categoryId: String) {
-        
-        if let products = coredate.fetchProductById(byID: categoryId) {
+        if let products = coredate.fetchProductById(byID: categoryId, isFilterByRating) {
             self.products = products
         } else {
-            print("Product not found.")
+            apiService.value = .error("Product not found.")
         }
+        
         productSerview.value = false
     }
     
     func filterByCardOfferID(with cardId: String?){
         guard let cardId = cardId else {
+            selectedCardOffer = nil
             categoryFilteredProduct(categoryId: categorys?[selectedCategoryIndex].id ?? "")
-//            productSerview.value = false
             return
         }
-        if let products = coredate.fetchCardOfferById(with: cardId,byID: categorys?[selectedCategoryIndex].id ?? "") {
+        if let products = coredate.fetchCardOfferById(with: cardId,byID: categorys?[selectedCategoryIndex].id ?? "",isFilterByRating) {
             self.products = products
         } else {
-            print("Product not found.")
+            apiService.value = .error("Product not found.")
         }
         productSerview.value = false
+    }
+    
+    func updateFavList(with productId: String,isFav: Bool) {
+        
+        
+        if let isFavAdd = coredate.updateIsFav(for: productId, to: isFav,isFilterByRating) {
+            if isFavAdd.isEmpty {
+                print("add fav")
+            }else{
+                apiService.value = .error(isFavAdd)
+            }
+        }
     }
     
     
@@ -122,8 +136,7 @@ extension HomeVM {
             }
             
         } catch {
-            // Handle errors
-            print("Error fetching data: \(error)")
+            apiService.value = .error("Error fetching data: \(error)")
         }
     }
     
