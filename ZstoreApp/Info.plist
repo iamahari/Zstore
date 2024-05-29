@@ -7,10 +7,9 @@
 		<string>SFProDisplay-Bold.otf</string>
 		<string>SFProDisplay-Medium.otf</string>
 		<string>SFProDisplay-Regular.otf</string>
-		<string>SF-Pro-Text-Semibold.otf</string>
-		<string>SF-Pro-Text-Regular.otf</string>
-		<string>SF-Pro-Text-Medium.otf</string>
-		<string></string>
+		<string>SFProText-Semibold.otf</string>
+		<string>SFProText-Regular.otf</string>
+		<string>SFProText-Medium.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

@@ -26,7 +26,7 @@ class OfferCardListView: UICollectionReusableView{
         let button = UIButton(type: .system)
         button.setTitle("×", for: .normal)
         button.setTitleColor(.blue_colour, for: .normal)
-        button.titleLabel?.font = UIFont(name: FontType.medium.value, size: 15)
+        button.titleLabel?.font = UIFont(name: FontType.medium.value, size: 18)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -121,10 +121,10 @@ class OfferCardListView: UICollectionReusableView{
             appliedLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             applledOfferValueLabel.leadingAnchor.constraint(equalTo: appliedLabel.trailingAnchor, constant: 5),
             applledOfferValueLabel.centerYAnchor.constraint(equalTo: appliedLabel.centerYAnchor),
-            removeAppliedOfferBtn.leadingAnchor.constraint(equalTo: applledOfferValueLabel.trailingAnchor, constant: 5),
-            removeAppliedOfferBtn.centerYAnchor.constraint(equalTo: applledOfferValueLabel.centerYAnchor),
-            removeAppliedOfferBtn.heightAnchor.constraint(equalToConstant: 14),
-            removeAppliedOfferBtn.widthAnchor.constraint(equalToConstant: 14),
+            removeAppliedOfferBtn.leadingAnchor.constraint(equalTo: applledOfferValueLabel.trailingAnchor, constant: 10),
+            removeAppliedOfferBtn.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            removeAppliedOfferBtn.heightAnchor.constraint(equalToConstant: 20),
+            removeAppliedOfferBtn.widthAnchor.constraint(equalToConstant: 20),
 
         ])
     }
@@ -135,7 +135,6 @@ class OfferCardListView: UICollectionReusableView{
     ///
     /// - Parameter sender: The button that triggered the action.
     @objc func actionOnRemoveOffer(_ sender: UIButton) {
-        print("Removed offer")
         removeOfferTapped?(self)
         setOfferViewConstraint(isOfferAdded: false)
     }

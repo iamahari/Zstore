@@ -62,6 +62,7 @@ class HomeVC: UIViewController {
         setupViewProductCillectionVIewContraints()
         
         bindUI()
+        
         changeProductCollectionViewTopConstraint(to: -35)
         setupFilterView()
         Task {
@@ -283,10 +284,8 @@ class HomeVC: UIViewController {
     func setFilterOption(isRating: Bool) {
         if let leftImageView = ratingOptionView.subviews.first(where: { $0.tag == 1 }) as? UIImageView {
             leftImageView.image = (isRating) ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
-            print("Rating tapped")
         }
         if let leftImageView = priceOptionView.subviews.first(where: { $0.tag == 2 }) as? UIImageView {
-            print("Price tapped")
             leftImageView.image = (!isRating)  ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
         }
     }
@@ -298,7 +297,10 @@ class HomeVC: UIViewController {
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, WaterfallLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, heightForHeaderInSection section: Int, with width: CGFloat) -> CGFloat {
-        
+        return getHeaderHeight()
+    }
+    
+    func getHeaderHeight() -> CGFloat {
         if !viewModel.showCardList {
             return 0
         } else {
@@ -307,20 +309,44 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, heightForItemAt indexPath: IndexPath, with width: CGFloat) -> CGFloat {
+        return getProductCellHeight(indexPath: indexPath, width: width)
+    }
+    
+    func getProductCellHeight(indexPath: IndexPath, width: CGFloat) -> CGFloat {
         if viewModel.isWaterFallLayout {
+            let product = viewModel.products?[indexPath.row]
+           
             let isEvenCell = indexPath.row % 2 == 0
-            var cellHeight: CGFloat = isEvenCell ? 300 : 350
-            if !(viewModel.products?[indexPath.row].isFav ?? false) {
-                cellHeight += 50
+            var cellHeight: CGFloat = 200 // image height
+            cellHeight += 26 //all padings
+            cellHeight += 22 //rating view height
+            cellHeight += 29 //amount view height
+            
+            cellHeight += (viewModel.selectedCardOffer != nil) ? 28 : 0 //save view height
+        
+            let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width - 20, height: 50))
+            titleLabel.font =  UIFont.font(with: 18, family: FontType.semibold)
+            titleLabel.text = product?.name
+            titleLabel.numberOfLines = isEvenCell ? 2 : 4
+            titleLabel.sizeToFit()
+            
+            cellHeight += titleLabel.frame.height //titele height
+            
+            titleLabel.font =  UIFont.font(with: 13, family: FontType.regular)
+            titleLabel.numberOfLines = isEvenCell ? 2 : 0
+            titleLabel.attributedText = Utils.getModifiedString(product?.productDescription ?? "")
+            titleLabel.sizeToFit()
+            cellHeight += isEvenCell ? 36 : (titleLabel.frame.height < 54) ? titleLabel.frame.height : 54 //title height
+            
+            if !(product?.isFav ?? false) {
+                cellHeight += 52 //fav view height
             }
-            cellHeight += 30
             return cellHeight
         } else {
             return 200
         }
     }
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case  self.categoryCollectionView:
@@ -343,12 +369,12 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         case productCollectionView:
             if viewModel.isWaterFallLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaterFallLayoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WaterFallLayoutCollectionViewCell
-                if let product = viewModel.products?[indexPath.row] {
-                    cell.updateCell(product: product,with: viewModel.selectedCardOffer)
-                }
                 cell.indexPath = indexPath
                 cell.titleLabel.numberOfLines = (indexPath.row%2 == 0) ? 2 : 0
                 cell.descriptionLabel.numberOfLines = (indexPath.row%2 == 0) ? 2 : 0
+                if let product = viewModel.products?[indexPath.row] {
+                    cell.updateCell(product: product,with: viewModel.selectedCardOffer)
+                }
                 cell.actionOnCallBack = { [weak self] isFav in
                     self?.viewModel.products?[cell.indexPath?.row ?? 0].isFav = isFav
                     self?.productCollectionView.reloadItems(at: [indexPath])
@@ -439,7 +465,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
 extension HomeVC: TitleBarViewDelegate {
     
     func didUpdateSearchResults(_ searchText: String) {
-        print("searchText ====> \(searchText)")
         viewModel.filterProductBySearch(with: searchText)
         if !searchText.isEmpty {
             viewModel.showCardList = false

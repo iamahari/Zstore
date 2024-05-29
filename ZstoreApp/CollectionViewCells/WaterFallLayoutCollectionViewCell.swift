@@ -12,7 +12,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "WaterFallLayoutCollectionViewCell"
     
-    
     // MARK: Create the UI components
     lazy var productImageView = AppUIComponents.createImageView(image: UIImage(named: "favorite_icon"),contentMode: .scaleAspectFill)
     lazy var favoriteImageView = AppUIComponents.createImageView(image: UIImage(named: "favorite_icon"),contentMode: .scaleAspectFit)
@@ -44,7 +43,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     
     //MARK: Callback
     var actionOnCallBack: ((Bool) -> Void)?
-    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -115,9 +113,13 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             favButtonTextLabel.trailingAnchor.constraint(equalTo: addToFavButtonView.trailingAnchor, constant: -8),
             
             titleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 88),
+            favButtonView.heightAnchor.constraint(lessThanOrEqualToConstant: 48),
+            
             
             ratingVew.heightAnchor.constraint(equalToConstant: 18),
+            savedPriceButton.heightAnchor.constraint(equalToConstant: 22),
             
+            priceContainerView.heightAnchor.constraint(equalToConstant: 25),
             priceLabel.leadingAnchor.constraint(equalTo: priceContainerView.leadingAnchor),
             priceLabel.topAnchor.constraint(equalTo: priceContainerView.topAnchor, constant: 0),
             priceLabel.bottomAnchor.constraint(equalTo: priceContainerView.bottomAnchor, constant: 0),

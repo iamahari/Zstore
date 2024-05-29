@@ -67,54 +67,32 @@ class Utils {
       /// - Parameter input: The input string.
       /// - Returns: A tuple to returns bold text, link text, and link URL.
       static func getBoldAndLinkText(_ input: String) -> (String, String, String) {
+          _ = NSMutableAttributedString(string: "")
+          
           let boldPattern = "\\*\\*(.*?)\\*\\*"
-          let linkPattern = "\\[(.*?)\\]\\((.*?)\\)"
+          let squarePattern1 = "\\[(.*?)\\]"
+          let linkPattern = "\\((.*?)\\)"
+          let squarePattern2 = "\\[(.*?)\\["
           
-          let regex = try! NSRegularExpression(pattern: "\(boldPattern)|\(linkPattern)", options: [])
-          
+          let regex = try! NSRegularExpression(pattern: "\(boldPattern)|\(squarePattern1)|\(linkPattern)|\(squarePattern2)", options: [])
+          let matches = regex.matches(in: input, options: [], range: NSRange(input.startIndex..., in: input))
           var boldText = ""
           var linkText = ""
           var linkURL = ""
-          
-          let matches = regex.matches(in: input, options: [], range: NSRange(input.startIndex..., in: input))
-          
           for match in matches {
               if let boldRange = Range(match.range(at: 1), in: input) {
                   boldText = String(input[boldRange])
-              } else if let linkTextRange = Range(match.range(at: 2), in: input), let linkURLRange = Range(match.range(at: 3), in: input) {
+              } else if let linkTextRange = Range(match.range(at: 2), in: input) {
                   linkText = String(input[linkTextRange])
+              } else if let linkURLRange = Range(match.range(at: 3), in: input) {
                   linkURL = String(input[linkURLRange])
+              } else if let linkTextRange = Range(match.range(at: 4), in: input) {
+                  linkText = String(input[linkTextRange])
               }
           }
           return (boldText, linkText, linkURL)
       }
       
-      /// Opens a link when a tap gesture is recognized.
-      ///
-      /// - Parameter gesture: The tap gesture recognizer.
-      static func openLink(_ gesture: UITapGestureRecognizer) {
-          guard let label = gesture.view as? UILabel, let text = label.attributedText else { return }
-          
-          let layoutManager = NSLayoutManager()
-          let textContainer = NSTextContainer(size: .zero)
-          let textStorage = NSTextStorage(attributedString: text)
-          
-          textStorage.addLayoutManager(layoutManager)
-          layoutManager.addTextContainer(textContainer)
-          
-          textContainer.lineFragmentPadding = 0
-          textContainer.lineBreakMode = label.lineBreakMode
-          textContainer.maximumNumberOfLines = label.numberOfLines
-          textContainer.size = label.bounds.size
-          
-          let location = gesture.location(in: label)
-          let characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-          
-          if characterIndex < text.length,
-             let linkValue = text.attribute(.link, at: characterIndex, effectiveRange: nil) as? URL {
-              UIApplication.shared.open(linkValue)
-          }
-      }
   
     static func formatAsIndianCurrency(_ amount: Double) -> String? {
         let formatter = NumberFormatter()

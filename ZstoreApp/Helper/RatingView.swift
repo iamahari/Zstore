@@ -45,9 +45,10 @@ class RatingView: UIView {
             ratingCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             ratingStackView.leadingAnchor.constraint(equalTo: ratingCountLabel.trailingAnchor, constant: 6),
-            ratingStackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            ratingStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            ratingStackView.widthAnchor.constraint(equalToConstant: 94),
+//            ratingStackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            ratingStackView.heightAnchor.constraint(equalToConstant: 14),
+            ratingStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            ratingStackView.widthAnchor.constraint(equalToConstant: 74),
             
             reviewCountLabel.leadingAnchor.constraint(equalTo: ratingStackView.trailingAnchor, constant: 6),
             reviewCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -60,10 +61,10 @@ class RatingView: UIView {
     /// - Parameter count: The rating value to determine the number of filled stars.
     /// This method creates five star image views, filling them based on the `count` value.
     private func setupRatingStars(count: Double) {
-        ratingStackView.subviews.forEach({ $0.removeFromSuperview() })
-                for index in 0..<5 {
-            let starImageView = UIImageView()
-            starImageView.image = UIImage(systemName: "star.fill")
+        ratingStackView.subviews.forEach({ $0.removeFromSuperview()})
+        for index in 0..<5 {
+            let starImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 14, height: 14))
+            starImageView.image = UIImage(systemName:  "star.fill")
             starImageView.translatesAutoresizingMaskIntoConstraints = false
             starImageView.contentMode = .scaleToFill
             // Set the star color based on the rating count

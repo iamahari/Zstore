@@ -65,6 +65,7 @@ class TitleBarView: UIView {
             customSearchView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
         ])
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        layoutIfNeeded()
     }
     
     //MARK: Button Actions

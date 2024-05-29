@@ -16,7 +16,7 @@ class LinearCollectionViewCell: UICollectionViewCell {
     lazy var favoriteImageView = AppUIComponents.createImageView(image: UIImage(named: "favorite_icon"),contentMode: .scaleAspectFill)
     let infoStackView = AppUIComponents.createStackView(axis: .vertical, alignment: .fill, distribution: .fill, spacing: 4)
     let colorsStackView =  AppUIComponents.createStackView(axis: .horizontal, alignment: .fill, distribution: .fill, spacing: 4)
-    lazy var titleLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font: UIFont.font(with: 18, family: FontType.medium))
+    lazy var titleLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font: UIFont.font(with: 18, family: FontType.semibold))
     lazy var ratingVew: RatingView = {
         let view = RatingView()
         view.translatesAutoresizingMaskIntoConstraints = false

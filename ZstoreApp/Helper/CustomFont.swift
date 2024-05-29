@@ -19,10 +19,10 @@ enum FontType: FontFamily {
     case semibold
     var value: String {
         switch self {
-        case .regular: return "SF-Pro-Text-Regular"
+        case .regular: return "SFProText-Regular"
         case .bold: return "SFProDisplay-Bold"
-        case .medium: return "SF-Pro-Text-Medium"
-        case .semibold: return "SF-Pro-Text-Semibold"
+        case .medium: return "SFProText-Medium"
+        case .semibold: return "SFProText-Semibold"
         }
     }
 }
