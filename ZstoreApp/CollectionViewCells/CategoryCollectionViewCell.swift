@@ -35,9 +35,14 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
 
     //MARK: Update Cell
-    func configure(with category: Category) {
-        label.text = category.name
-        contentView.backgroundColor = (category.isSelected ?? false) ? .orangeColour.withAlphaComponent(0.1) : .white
-        contentView.setBorder(borderWidth: 1, color: (category.isSelected ?? false) ? .orangeColour : .fav_button_text_color)
+    func configure(with category: CategoryList,with isSearch: Bool,count productCount: Int,with isSelecedProduct: Bool) {
+        if isSearch {
+            label.text = category.name ?? ""
+        }else{
+            label.text = "\(category.name ?? "") (\(productCount))"
+        }
+        label.textColor = (isSelecedProduct) ? .orangeColour : .fav_button_text_color
+        contentView.backgroundColor = (isSelecedProduct) ? .orangeColour.withAlphaComponent(0.1) : .white
+        contentView.setBorder(borderWidth: 1, color: (isSelecedProduct) ? .orangeColour : .fav_button_text_color)
     }
 }

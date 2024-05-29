@@ -96,6 +96,18 @@ class LinearCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    let descriptionLabel1: UITextView = {
+        let label = UITextView()
+        label.textAlignment = .left
+        label.font = UIFont.font(with: 13, family: FontType.regular)
+        label.textColor = .description_colour
+        label.isEditable = false
+        label.isScrollEnabled = false
+        label.isUserInteractionEnabled = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let savedPriceButton: UIButton = {
         let button = UIButton()
         var configuration = UIButton.Configuration.filled()
@@ -192,6 +204,8 @@ class LinearCollectionViewCell: UICollectionViewCell {
             titleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 88),
             
             ratingVew.heightAnchor.constraint(equalToConstant: 18),
+            
+//            descriptionLabel.heightAnchor.constraint(equalToConstant: 22),
 
             
             priceLabel.leadingAnchor.constraint(equalTo: priceContainerView.leadingAnchor),
@@ -203,26 +217,27 @@ class LinearCollectionViewCell: UICollectionViewCell {
             
             savedPriceButton.centerYAnchor.constraint(equalTo: priceLabel.centerYAnchor),
             savedPriceButton.leadingAnchor.constraint(equalTo: oldPriceLabel.trailingAnchor, constant: 4),
+            savedPriceButton.heightAnchor.constraint(equalToConstant: 22),
             
             colorsStackView.topAnchor.constraint(equalTo: colorsContainerView.topAnchor, constant: 0),
             colorsStackView.bottomAnchor.constraint(equalTo: colorsContainerView.bottomAnchor, constant: 0),
             colorsStackView.leadingAnchor.constraint(equalTo: colorsContainerView.leadingAnchor, constant: 0)
         ])
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         descriptionLabel.addGestureRecognizer(tapGesture)
 
     }
     
-    func updateCell(product: Products) {
-        if let url = URL(string: product.imageURL)  {
+    func updateCell(product: ProductsList) {
+        if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
         }
         titleLabel.text = product.name
         priceLabel.text = String(product.price)
         oldPriceLabel.attributedText = Utils.markText(String(product.price))
         savedPriceButton.setTitle( "Save \(5)", for: .normal)
-        descriptionLabel.attributedText = Utils.getModifiedString(product.description)
+        descriptionLabel.attributedText = Utils.getModifiedString(product.productDescription ?? "")
         ratingVew.addRatingsDetails(with: product)
 //        showOrDismissFavoriteButtonView(show: !(false))
         savedPriceButton.isHidden = !true
@@ -239,28 +254,19 @@ class LinearCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @objc private func didTapLabel(_ gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel, let text = label.attributedText else { return }
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel else { return }
+        let text = label.attributedText?.string ?? ""
         
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: .zero)
-        let textStorage = NSTextStorage(attributedString: text)
-        
-        textStorage.addLayoutManager(layoutManager)
-        layoutManager.addTextContainer(textContainer)
-        
-        textContainer.lineFragmentPadding = 0
-        textContainer.lineBreakMode = label.lineBreakMode
-        textContainer.maximumNumberOfLines = label.numberOfLines
-        textContainer.size = label.bounds.size
-        
-        let location = gesture.location(in: label)
-        let characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        if characterIndex < text.length,
-           let linkValue = text.attribute(.link, at: characterIndex, effectiveRange: nil) as? URL {
-            // Handle link tap
-            UIApplication.shared.open(linkValue)
+        for index in  0..<text.count {
+            let attributes = label.attributedText!.attributes(at: index, effectiveRange: nil)
+            if let url = attributes[.link] as? URL {
+                UIApplication.shared.open(url)
+                return
+            } else if let urlString = attributes[.link] as? String, let url = URL(string: urlString) {
+                UIApplication.shared.open(url)
+                return
+            }
         }
     }
-
 }

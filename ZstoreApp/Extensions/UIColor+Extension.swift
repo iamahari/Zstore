@@ -19,6 +19,8 @@ extension UIColor {
     static let fav_button_border_color = UIColor(named: "fav_button_border_color")!
     static let green_colour = UIColor(named: "green_colour")!
     static let blue_colour = UIColor(named: "blue_colour")!
+    static let blur_view_color = UIColor(named: "blur_view_color")!
+    static let filter_view_color = UIColor(named: "filter_view_color")!
 
     
     

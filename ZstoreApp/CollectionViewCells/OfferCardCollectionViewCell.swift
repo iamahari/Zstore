@@ -17,7 +17,7 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
     private let titleLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 16)
     private let subtitleLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 12)
     private let cashbackLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 16)
-    private let imageView = AppUIComponents.createImageView(contentMode: .scaleAspectFit)
+    private let imageView = AppUIComponents.createImageView(contentMode: .scaleAspectFill)
     private let containerView = AppUIComponents.createView(backgroundColor: .black,cornerRadius: 10 )
     private let overflowView = AppUIComponents.createView(backgroundColor: .clear,clipsToBounds: false)
 
@@ -53,7 +53,7 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
             titleLabel.trailingAnchor.constraint(equalTo: overflowView.leadingAnchor, constant: -20)
         ])
         
@@ -96,11 +96,11 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: Update the cell
-    func configure(with offer: CardOffer,gradientColor: [CGColor]) {
+    func configure(with offer: CardOffers,gradientColor: [CGColor]) {
         titleLabel.text = offer.cardName
         subtitleLabel.text = offer.offerDesc
-        cashbackLabel.text = offer.maxDiscount
-        if let url = URL(string: offer.imageURL)  {
+        cashbackLabel.text = offer.maxDisc
+        if let url = URL(string: offer.imageUrl ?? "")  {
             imageView.layer.masksToBounds = true
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = 13

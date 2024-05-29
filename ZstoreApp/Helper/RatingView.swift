@@ -22,8 +22,8 @@ class RatingView: UIView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.spacing = 0
+        stackView.distribution = .fillEqually
+        stackView.spacing = 1
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -52,11 +52,14 @@ class RatingView: UIView {
         addSubview(reviewCountLabel)
         
         NSLayoutConstraint.activate([
+            //todo
             ratingCountLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             ratingCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             ratingStackView.leadingAnchor.constraint(equalTo: ratingCountLabel.trailingAnchor, constant: 6),
-            ratingStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            ratingStackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            ratingStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            ratingStackView.widthAnchor.constraint(equalToConstant: 94),
             
             reviewCountLabel.leadingAnchor.constraint(equalTo: ratingStackView.trailingAnchor, constant: 6),
             reviewCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -68,15 +71,17 @@ class RatingView: UIView {
     private func setupRatingStars(count: Double) {
         ratingStackView.subviews.forEach({ $0.removeFromSuperview()})
         for index in 0..<5 {
-            let starImageView = UIImageView(frame: .init(x: 0, y: 0, width: 10, height: 10))
+            let starImageView = UIImageView()
             starImageView.image = UIImage(systemName:  "star.fill")
+            starImageView.translatesAutoresizingMaskIntoConstraints = false
+            starImageView.contentMode = .scaleToFill
             starImageView.tintColor = (index < Int(count)) ? .orange_colour : .gray_color
             ratingStackView.addArrangedSubview(starImageView)
         }
     }
     
     
-    func addRatingsDetails(with product: Products) {
+    func addRatingsDetails(with product: ProductsList) {
         reviewCountLabel.text = "(\(product.reviewCount))"
         ratingCountLabel.text = "\(product.rating)"
         setupRatingStars(count: product.rating)

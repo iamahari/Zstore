@@ -15,7 +15,7 @@ class OfferCardListView: UICollectionReusableView{
     // MARK: Create the UI components
     
     private var offerView = AppUIComponents.createView()
-    private var offerTitle = AppUIComponents.createLabel(text: "Offers", font: UIFont.font(with: 18, family: FontType.bold))
+    private var offerTitle = AppUIComponents.createLabel(text: "Offers",textColor: .orangeColour, font: UIFont.font(with: 18, family: FontType.bold))
     private var appliedLabel = AppUIComponents.createLabel(text: "Applied:",textColor: .fav_button_text_color,fontSize: 14)
     var applledOfferValueLabel = AppUIComponents.createLabel(text: "",textColor: .blue_colour,fontSize: 14)
     private var offerImg = AppUIComponents.createImageView(image: UIImage(systemName: "bolt.fill"), contentMode: .scaleAspectFit)
@@ -32,7 +32,7 @@ class OfferCardListView: UICollectionReusableView{
     }()
     
     // MARK: Variables
-    var cardOffers: [CardOffer]?
+    var cardOffers: [CardOffers]?
     
     // MARK: delegate and callback
     
@@ -88,8 +88,8 @@ class OfferCardListView: UICollectionReusableView{
             offerImg.heightAnchor.constraint(equalToConstant: 20),
             offerImg.widthAnchor.constraint(equalToConstant: 20),
             offerTitle.leadingAnchor.constraint(equalTo: offerImg.trailingAnchor,constant: 10),
-            offerTitle.heightAnchor.constraint(equalToConstant: 22),
-            offerTitle.topAnchor.constraint(equalTo: offerView.topAnchor,constant: 11),
+            offerTitle.centerYAnchor.constraint(equalTo: offerImg.centerYAnchor)
+                
         ])
       
         NSLayoutConstraint.activate([
@@ -141,7 +141,7 @@ class OfferCardListView: UICollectionReusableView{
     
     //MARK: Other Function
     
-    func configureData(data: [CardOffer]?, isOfferAdded: Bool) {
+    func configureData(data: [CardOffers]?, isOfferAdded: Bool) {
         cardOffers = data
         offerCollectionView.reloadData()
         setOfferViewConstraint(isOfferAdded: isOfferAdded)

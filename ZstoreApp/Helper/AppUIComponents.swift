@@ -123,5 +123,55 @@ class AppUIComponents {
         return collectionView
     }
 
+    
+    static func getFilterOptionView(leftImage: UIImage, title: String, rightImage: UIImage, tag: Int) -> UIView {
+        let containerView = createView()
+        
+        
+        let leftImageView = createImageView(image: leftImage, contentMode: .scaleAspectFit)
+        
+        let rightImageView = createImageView(image: rightImage, contentMode: .scaleAspectFit)
+        
+        let optionTitleLabel = createLabel(text: title, font: AppFont.font(with: 18, family: FontType.semibold))
+        optionTitleLabel.textAlignment = .left
+        
+        let lineLabel = AppUIComponents.createLabel(text: "", font: AppFont.font(with: 13, family: FontType.medium))
+        
+        containerView.addSubview(lineLabel)
+        containerView.addSubview(leftImageView)
+        containerView.addSubview(rightImageView)
+        containerView.addSubview(optionTitleLabel)
+        lineLabel.backgroundColor = .black_colour
+        
+        rightImageView.tag = tag
+        
+        
+        NSLayoutConstraint.activate([
+            lineLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            lineLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            lineLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            lineLabel.heightAnchor.constraint(equalToConstant: 1),
+            
+            leftImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            leftImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 9),
+            leftImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -9),
+            leftImageView.heightAnchor.constraint(equalToConstant: 36),
+            leftImageView.widthAnchor.constraint(equalToConstant: 36),
+            
+            optionTitleLabel.leadingAnchor.constraint(equalTo: leftImageView.trailingAnchor, constant: 12),
+            optionTitleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            
+            rightImageView.leadingAnchor.constraint(equalTo: optionTitleLabel.trailingAnchor, constant: 12),
+            rightImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            
+            rightImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            rightImageView.heightAnchor.constraint(equalToConstant: 44),
+            rightImageView.widthAnchor.constraint(equalToConstant: 44),
+        ])
+        
+        return containerView
+        
+    }
+
 }
 

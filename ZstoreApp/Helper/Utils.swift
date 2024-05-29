@@ -8,13 +8,16 @@
 import UIKit
 
 
+
 class Utils {
     
     static func getModifiedString(_ originalString: String) -> NSAttributedString? {
-        var cleanedString = originalString.removeSpecialCharacter()
+        print("originalString >>>>> \(originalString)")
+        var cleanedString = originalString
         
         let receivedString = getBoldAndLinkText(originalString)
         cleanedString = cleanedString.replacingOccurrences(of: receivedString.2, with: "")
+        cleanedString = cleanedString.removeSpecialCharacter()
         return modifyString(in: cleanedString, receivedString.0, receivedString.1, receivedString.2 )
     }
     
@@ -25,22 +28,24 @@ class Utils {
     }
     
     static func modifyString(in text: String,_ boldSubstring: String,_  linkText: String,_  linkURL: String) -> NSAttributedString {
-        let attributedString = NSMutableAttributedString(string: text)
+        let attributedString = NSMutableAttributedString(string: text, attributes: [.foregroundColor : UIColor.description_colour])
+        
         if let boldRange = text.range(of: boldSubstring) {
             let nsRange = NSRange(boldRange, in: text)
             attributedString.addAttribute(.font, value: AppFont.font(with: 13, family: FontType.bold), range: nsRange)
         }
         
-        if let boldRange = text.range(of: linkText), 
+        if let boldRange = text.range(of: linkText),
             let URL = URL(string: linkURL) {
             let nsRange = NSRange(boldRange, in: text)
             print("link text added >>>>>>>>>>>>>>>>>>>>>>")
             attributedString.addAttributes([
                 .foregroundColor: UIColor.blue,
                 .underlineStyle: NSUnderlineStyle.single.rawValue,
-                .link: URL
+                .link: linkURL
             
             ], range: nsRange)
+            attributedString.accessibilityValue
 //            attributedString.setValue(linkURL, forKey: "link_value")
         }
         
@@ -102,6 +107,7 @@ class Utils {
             UIApplication.shared.open(linkValue)
         }
     }
+    
+    
 
 }
-

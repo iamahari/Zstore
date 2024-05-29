@@ -30,14 +30,11 @@
 		1394B1192C0104AC00A5D722 /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394B1182C0104AC00A5D722 /* CustomFont.swift */; };
 		1394B11C2C01CAC800A5D722 /* WaterFallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394B11B2C01CAC800A5D722 /* WaterFallLayout.swift */; };
 		1394B11E2C01D57000A5D722 /* WaterFallLayoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394B11D2C01D57000A5D722 /* WaterFallLayoutCollectionViewCell.swift */; };
-		1394B1202C01DCAD00A5D722 /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394B11F2C01DCAD00A5D722 /* ProductInfoView.swift */; };
 		EB25E4012C05E6470020EE01 /* CategoryList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3F82C05E6460020EE01 /* CategoryList+CoreDataClass.swift */; };
-		EB25E4022C05E6470020EE01 /* ProductsList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3F92C05E6460020EE01 /* ProductsList+CoreDataClass.swift */; };
 		EB25E4032C05E6470020EE01 /* CardOffers+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3FA2C05E6460020EE01 /* CardOffers+CoreDataClass.swift */; };
 		EB25E4042C05E6470020EE01 /* ProductData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3FB2C05E6460020EE01 /* ProductData.xcdatamodeld */; };
-		EB25E4052C05E6470020EE01 /* ProductLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3FD2C05E6460020EE01 /* ProductLocalDataManager.swift */; };
+		EB25E4052C05E6470020EE01 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3FD2C05E6460020EE01 /* CoreDataManager.swift */; };
 		EB25E4062C05E6470020EE01 /* CardOffers+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3FE2C05E6460020EE01 /* CardOffers+CoreDataProperties.swift */; };
-		EB25E4072C05E6470020EE01 /* ProductsList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E3FF2C05E6460020EE01 /* ProductsList+CoreDataProperties.swift */; };
 		EB25E4082C05E6470020EE01 /* CategoryList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E4002C05E6460020EE01 /* CategoryList+CoreDataProperties.swift */; };
 		EB25E40A2C05E76F0020EE01 /* ProductApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E4092C05E76F0020EE01 /* ProductApiManager.swift */; };
 		EB25E40C2C05E7730020EE01 /* ProductDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25E40B2C05E7730020EE01 /* ProductDataManager.swift */; };
@@ -51,6 +48,8 @@
 		EB6079A92C03AB9C001B22CE /* ProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6079A82C03AB9C001B22CE /* ProductDetails.swift */; };
 		EB6079AB2C03AE6E001B22CE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6079AA2C03AE6E001B22CE /* UIImageView+Extension.swift */; };
 		EB6079AD2C04DD27001B22CE /* OfferCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6079AC2C04DD27001B22CE /* OfferCardListView.swift */; };
+		EBF4FFB62C060C8F0068EA03 /* ProductsList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4FFB42C060C8F0068EA03 /* ProductsList+CoreDataClass.swift */; };
+		EBF4FFB72C060C8F0068EA03 /* ProductsList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4FFB52C060C8F0068EA03 /* ProductsList+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,14 +78,11 @@
 		1394B1182C0104AC00A5D722 /* CustomFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		1394B11B2C01CAC800A5D722 /* WaterFallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallLayout.swift; sourceTree = "<group>"; };
 		1394B11D2C01D57000A5D722 /* WaterFallLayoutCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallLayoutCollectionViewCell.swift; sourceTree = "<group>"; };
-		1394B11F2C01DCAD00A5D722 /* ProductInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoView.swift; sourceTree = "<group>"; };
 		EB25E3F82C05E6460020EE01 /* CategoryList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CategoryList+CoreDataClass.swift"; sourceTree = "<group>"; };
-		EB25E3F92C05E6460020EE01 /* ProductsList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProductsList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		EB25E3FA2C05E6460020EE01 /* CardOffers+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardOffers+CoreDataClass.swift"; sourceTree = "<group>"; };
 		EB25E3FC2C05E6460020EE01 /* ProductData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProductData.xcdatamodel; sourceTree = "<group>"; };
-		EB25E3FD2C05E6460020EE01 /* ProductLocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductLocalDataManager.swift; sourceTree = "<group>"; };
+		EB25E3FD2C05E6460020EE01 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		EB25E3FE2C05E6460020EE01 /* CardOffers+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardOffers+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		EB25E3FF2C05E6460020EE01 /* ProductsList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProductsList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EB25E4002C05E6460020EE01 /* CategoryList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CategoryList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EB25E4092C05E76F0020EE01 /* ProductApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductApiManager.swift; sourceTree = "<group>"; };
 		EB25E40B2C05E7730020EE01 /* ProductDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDataManager.swift; sourceTree = "<group>"; };
@@ -100,6 +96,8 @@
 		EB6079A82C03AB9C001B22CE /* ProductDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetails.swift; sourceTree = "<group>"; };
 		EB6079AA2C03AE6E001B22CE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		EB6079AC2C04DD27001B22CE /* OfferCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCardListView.swift; sourceTree = "<group>"; };
+		EBF4FFB42C060C8F0068EA03 /* ProductsList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductsList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EBF4FFB52C060C8F0068EA03 /* ProductsList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductsList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,14 +205,12 @@
 		1394B1172C0104A400A5D722 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				EBF4FFB32C05FF180068EA03 /* DataManager */,
 				EB6079A52C03AB61001B22CE /* Box.swift */,
 				EB6079A32C03AB5C001B22CE /* AppUIComponents.swift */,
 				1394B1182C0104AC00A5D722 /* CustomFont.swift */,
 				1394B11B2C01CAC800A5D722 /* WaterFallLayout.swift */,
-				1394B11F2C01DCAD00A5D722 /* ProductInfoView.swift */,
-				EB25E4092C05E76F0020EE01 /* ProductApiManager.swift */,
 				EB25E40D2C05E77D0020EE01 /* Reachability.swift */,
-				EB25E40B2C05E7730020EE01 /* ProductDataManager.swift */,
 				1377C31F2C02573F0099500E /* RatingView.swift */,
 				130C04E72C0312CD0000A06A /* Utils.swift */,
 			);
@@ -233,14 +229,13 @@
 		EB25E3F72C05E6460020EE01 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				EB25E3F82C05E6460020EE01 /* CategoryList+CoreDataClass.swift */,
-				EB25E3F92C05E6460020EE01 /* ProductsList+CoreDataClass.swift */,
 				EB25E3FA2C05E6460020EE01 /* CardOffers+CoreDataClass.swift */,
-				EB25E3FB2C05E6460020EE01 /* ProductData.xcdatamodeld */,
-				EB25E3FD2C05E6460020EE01 /* ProductLocalDataManager.swift */,
 				EB25E3FE2C05E6460020EE01 /* CardOffers+CoreDataProperties.swift */,
-				EB25E3FF2C05E6460020EE01 /* ProductsList+CoreDataProperties.swift */,
 				EB25E4002C05E6460020EE01 /* CategoryList+CoreDataProperties.swift */,
+				EB25E3F82C05E6460020EE01 /* CategoryList+CoreDataClass.swift */,
+				EBF4FFB42C060C8F0068EA03 /* ProductsList+CoreDataClass.swift */,
+				EBF4FFB52C060C8F0068EA03 /* ProductsList+CoreDataProperties.swift */,
+				EB25E3FB2C05E6460020EE01 /* ProductData.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -267,6 +262,16 @@
 				EB6079A82C03AB9C001B22CE /* ProductDetails.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EBF4FFB32C05FF180068EA03 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				EB25E3FD2C05E6460020EE01 /* CoreDataManager.swift */,
+				EB25E4092C05E76F0020EE01 /* ProductApiManager.swift */,
+				EB25E40B2C05E7730020EE01 /* ProductDataManager.swift */,
+			);
+			path = DataManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,27 +356,26 @@
 				EB6079AB2C03AE6E001B22CE /* UIImageView+Extension.swift in Sources */,
 				1394B11E2C01D57000A5D722 /* WaterFallLayoutCollectionViewCell.swift in Sources */,
 				EB25E40A2C05E76F0020EE01 /* ProductApiManager.swift in Sources */,
+				EBF4FFB62C060C8F0068EA03 /* ProductsList+CoreDataClass.swift in Sources */,
 				EB25E40C2C05E7730020EE01 /* ProductDataManager.swift in Sources */,
 				EB25E4062C05E6470020EE01 /* CardOffers+CoreDataProperties.swift in Sources */,
 				EB6079A42C03AB5C001B22CE /* AppUIComponents.swift in Sources */,
+				EBF4FFB72C060C8F0068EA03 /* ProductsList+CoreDataProperties.swift in Sources */,
 				EB6079AD2C04DD27001B22CE /* OfferCardListView.swift in Sources */,
 				130C05102C0379B00000A06A /* String+Extension.swift in Sources */,
 				EB25E4042C05E6470020EE01 /* ProductData.xcdatamodeld in Sources */,
 				EB25E4012C05E6470020EE01 /* CategoryList+CoreDataClass.swift in Sources */,
 				136291D02C00D0D400253FF0 /* UIColor+Extension.swift in Sources */,
 				130C04E62C030F260000A06A /* LinearCollectionViewCell.swift in Sources */,
-				EB25E4022C05E6470020EE01 /* ProductsList+CoreDataClass.swift in Sources */,
 				130C04E82C0312CD0000A06A /* Utils.swift in Sources */,
-				1394B1202C01DCAD00A5D722 /* ProductInfoView.swift in Sources */,
 				EB5EA9292C05A3A80066B577 /* Protocol.swift in Sources */,
 				1377C3202C02573F0099500E /* RatingView.swift in Sources */,
 				EB60799E2C03AB2E001B22CE /* OfferCardCollectionViewCell.swift in Sources */,
 				136291CE2C00D02000253FF0 /* UIView+Extension.swift in Sources */,
-				EB25E4072C05E6470020EE01 /* ProductsList+CoreDataProperties.swift in Sources */,
 				136291C82C00C73400253FF0 /* CustomSearchView.swift in Sources */,
 				EB25E4082C05E6470020EE01 /* CategoryList+CoreDataProperties.swift in Sources */,
 				136291B42C009F6400253FF0 /* HomeVC.swift in Sources */,
-				EB25E4052C05E6470020EE01 /* ProductLocalDataManager.swift in Sources */,
+				EB25E4052C05E6470020EE01 /* CoreDataManager.swift in Sources */,
 				1394B11C2C01CAC800A5D722 /* WaterFallLayout.swift in Sources */,
 				136291C62C00BC8C00253FF0 /* TitleBarView.swift in Sources */,
 				EB25E40E2C05E77D0020EE01 /* Reachability.swift in Sources */,

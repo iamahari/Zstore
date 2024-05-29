@@ -11,61 +11,95 @@ import UIKit
 
 class HomeVM {
     typealias IntPair = (Int?, Int?)
-    var productDetails: ProductDetails?
     var apiService = Box<LoadState>(.loading)
     var categorysService =  Box<IntPair>((0,0))
-    var cardOfferSerview = Box<CardOffer?>(nil)
+    var cardOfferSerview = Box<CardOffers?>(nil)
     var productSerview = Box<Bool>(false)
     
     
     var listOfGradientColor = [[UIColor(hex: "#1A7EDA").cgColor, UIColor(hex: "#2BD1FF").cgColor],
                                [UIColor(hex: "#FFA61E").cgColor, UIColor(hex: "#FD5261").cgColor],
                                [UIColor(hex: "#F02374").cgColor, UIColor(hex: "#F51AEC").cgColor]]
-    var isWaterFallLayout = false
-    var allProducts: [Products]?
-    var products: [Products]?
-    var categorys: [Category]?
-    var cardOffers: [CardOffer]?
-    var selectedCardOffer: CardOffer?
     
     
     
-//     MARK: Category filler functionality
+    var isWaterFallLayout = true
+    var coredate = CoreDataManager.shared
+    var selectedCategoryIndex = 0
     
+//    var allProducts: [ProductsList]?
+    
+    var products: [ProductsList]?
+    
+    var categorys: [CategoryList]?
+    var cardOffers: [CardOffers]?
+    
+    var selectedCardOffer: CardOffers?
+//    var selectedCategorys: Category?
+//    var selectedProduct: [Products]?
+    var searchValue = ""
+    
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+     //MARK: Category filler functionality
     func actionOnSelectedCategory(index: Int) {
-        guard var categorys = categorys else { return }
-        
-        let lastSelectedIndex = categorys.firstIndex { $0.isSelected == true }
-        // MARK: Deselect the previously selected category
-        if let lastSelectedIndex = lastSelectedIndex {
-            categorys[lastSelectedIndex].isSelected?.toggle()
-        }
-        // MARK: Select the new category
-        categorys[index].isSelected?.toggle()
-        categoryFilteredProduct(category: categorys[index])
-        self.categorys = categorys
-        
-        categorysService.value = (index, lastSelectedIndex)
+        let lastSelectedIndex = selectedCategoryIndex
+        selectedCategoryIndex = index
+        categorysService.value = (selectedCategoryIndex, lastSelectedIndex)
+       
+        self.isWaterFallLayout = categorys?[index].layout == "waterfall"
+        categoryFilteredProduct(categoryId: categorys?[index].id ?? "100023")
     }
     
-    func actionOnSelectedOfferCard(_ cardOffer: CardOffer){
+    func actionOnSelectedOfferCard(_ cardOffer: CardOffers){
         selectedCardOffer = cardOffer
         cardOfferSerview.value = cardOffer
     }
+
     
-    
-    func categoryFilteredProduct(category: Category) {
+    /// Filters the products based on the user input and updates the `products`
+    /// - Parameter userInput: The search text entered by the user.
+    func filterProducts(with userInput: String) {
+        searchValue = userInput
         
-        let filteredProduct = allProducts?.filter({ product in
-            product.categoryID == category.id
-        })
-        
-        isWaterFallLayout = category.layout == "waterfall"
-        
-        products = filteredProduct
-        productSerview.value = true
-        
+        if userInput.isEmpty {
+            categoryFilteredProduct(categoryId: categorys?[selectedCategoryIndex].id ?? "100023")
+        }else{
+            if let products = coredate.fetchProductByName(with: userInput,byID: categorys?[selectedCategoryIndex].id ?? "") {
+                self.products = products
+                productSerview.value = true
+           }else{
+               print("Z")
+           }
+        }
+        categorysService.value = (selectedCategoryIndex, nil)
     }
+    
+    func categoryFilteredProduct(categoryId: String) {
+        
+        if let products = coredate.fetchProductById(byID: categoryId) {
+            self.products = products
+        } else {
+            print("Product not found.")
+        }
+        productSerview.value = false
+    }
+    
+    func filterByCardOfferID(with cardId: String?){
+        guard let cardId = cardId else {
+            categoryFilteredProduct(categoryId: categorys?[selectedCategoryIndex].id ?? "")
+//            productSerview.value = false
+            return
+        }
+        if let products = coredate.fetchCardOfferById(with: cardId,byID: categorys?[selectedCategoryIndex].id ?? "") {
+            self.products = products
+        } else {
+            print("Product not found.")
+        }
+        productSerview.value = false
+    }
+    
+    
     
 }
 
@@ -74,44 +108,24 @@ class HomeVM {
 
 extension HomeVM {
     
-    func fetchProductDetailsAPI() {
+    func fetchProductDetailsAPI() async{
         apiService.value = .loading
-        ProductDataManager().fetch { productDetails, error in
-            if let error = error {
-                print(error)
-                return
+        
+        do {
+            let fetchedData = try await ProductDataManager.fetch()
+            let (categories,offers,_) = fetchedData
+            DispatchQueue.main.async {
+                self.cardOffers = offers
+                self.categorys = categories
+                self.categoryFilteredProduct(categoryId: categories[self.selectedCategoryIndex].id ?? "")
+                self.apiService.value = .populated
             }
             
-            guard let (categories,offers,products) = productDetails else {return}
+        } catch {
+            // Handle errors
+            print("Error fetching data: \(error)")
         }
-//        guard let url = URL(string: "https://raw.githubusercontent.com/princesolomon/zstore/main/data.json") else { return }
-//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            if let error = error {
-//                print("Data task error: \(error.localizedDescription)")
-//                return
-//            }
-//            guard let data = data else { return }
-//            do {
-//                let decoder = JSONDecoder()
-//                let model = try decoder.decode(ProductDetails.self, from: data)
-//                DispatchQueue.main.async {
-//                    self.productDetails = model
-//                    self.products = model.products
-//                    self.allProducts = model.products
-//                    self.categorys = model.category
-//                    self.cardOffers = model.cardOffers
-//                    
-//                }
-//                self.apiService.value = .populated
-//            } catch {
-//                print("Decoding error: \(error.localizedDescription)")
-//                self.apiService.value = .error
-//            }
-//        }
-//        task.resume()
     }
     
 }
-
-
 

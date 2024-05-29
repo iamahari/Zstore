@@ -37,6 +37,6 @@ class Box<T> {
 enum LoadState {
     case loading
     case populated
-    case error
+    case error(String)
 }
 

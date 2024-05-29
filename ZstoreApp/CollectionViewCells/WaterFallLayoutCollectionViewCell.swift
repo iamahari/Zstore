@@ -201,7 +201,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         addToFavButtonView.setCornerRadius(radius: 10)
         addToFavButtonView.setBorder(borderWidth: 1, color: .fav_button_border_color)
         showOrDismissFavoriteButtonView(show: !(true ?? false))
-        savedPriceButton.backgroundColor = .green_colour
         savedPriceButton.setCornerRadius(radius: 11)
         productImageView.clipsToBounds = true
 //        oldPriceLabel.isHidden = true
@@ -223,7 +222,7 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -10),
             infoStackView.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 12),
             infoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-//            
+//
             addToFavButtonView.leadingAnchor.constraint(equalTo: favButtonView.leadingAnchor,constant: 0),
             addToFavButtonView.topAnchor.constraint(equalTo: favButtonView.topAnchor, constant: 6),
 //            addToFavButtonView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor,constant: 0),
@@ -241,7 +240,7 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             
             titleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 88),
             
-            ratingVew.heightAnchor.constraint(equalToConstant: 10),
+            ratingVew.heightAnchor.constraint(equalToConstant: 18),
 //            favButtonView.heightAnchor.constraint(equalToConstant: 36),
 //            savedPriceButton.heightAnchor.constraint(equalToConstant: 22),
             
@@ -269,19 +268,19 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         let addFavTapGesture = UITapGestureRecognizer(target: self, action: #selector(addFavorite))
         addToFavButtonView.addGestureRecognizer(addFavTapGesture)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_:)))
-        descriptionLabel.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLabel(_:)))
+//        descriptionLabel.addGestureRecognizer(tapGesture)
     }
     
-    func updateCell(product: Products) {
-        if let url = URL(string: product.imageURL)  {
+    func updateCell(product: ProductsList) {
+        if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
         }
         titleLabel.text = product.name
         priceLabel.text = String(product.price)
         oldPriceLabel.attributedText = Utils.markText(String(product.price))
         savedPriceButton.setTitle( "Save \(5)", for: .normal)
-        descriptionLabel.attributedText = Utils.getModifiedString(product.description)
+        descriptionLabel.attributedText = Utils.getModifiedString(product.productDescription ?? "")
         ratingVew.addRatingsDetails(with: product)
         showOrDismissFavoriteButtonView(show: !(false))
         savedPriceButton.isHidden = !false
@@ -297,28 +296,19 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func didTapLabel(_ gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel, let text = label.attributedText else { return }
+        //todo
+        guard let label = gesture.view as? UILabel else { return }
+        let text = label.attributedText?.string ?? ""
         
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: .zero)
-        let textStorage = NSTextStorage(attributedString: text)
-        
-        textStorage.addLayoutManager(layoutManager)
-        layoutManager.addTextContainer(textContainer)
-        
-        textContainer.lineFragmentPadding = 0
-        textContainer.lineBreakMode = label.lineBreakMode
-        textContainer.maximumNumberOfLines = label.numberOfLines
-        textContainer.size = label.bounds.size
-        
-        let location = gesture.location(in: label)
-        let characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        
-//        text.attributes(at: <#T##Int#>, effectiveRange: <#T##NSRangePointer?#>)
-//        if characterIndex < text.length,
-           if let linkValue = text.attribute(.link, at: characterIndex, effectiveRange: nil) as? URL {
-            // Handle link tap
-            UIApplication.shared.open(linkValue)
+        for index in  0..<text.count {
+            let attributes = label.attributedText!.attributes(at: index, effectiveRange: nil)
+            if let url = attributes[.link] as? URL {
+                UIApplication.shared.open(url)
+                return
+            } else if let urlString = attributes[.link] as? String, let url = URL(string: urlString) {
+                UIApplication.shared.open(url)
+                return
+            }
         }
     }
     
@@ -328,3 +318,4 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         addToFavButtonView.isHidden = !show
     }
 }
+

@@ -33,6 +33,37 @@ class HomeVC: UIViewController {
     var categoryCollectionView: UICollectionView!
     var productCollectionView: UICollectionView!
     
+    var filterImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "filter_icon")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    var blurView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blur_view_color
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    var filterView = AppUIComponents.createView(cornerRadius: 23)
+    
+    var filterOptionStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 1
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    var filterTitleLabel = AppUIComponents.createLabel(text: "Filter Order: From Top to Bottom ",textColor: .description_colour, font: AppFont.font(with: 13, family: FontType.medium))
+    var ratingOptionView = AppUIComponents.getFilterOptionView(leftImage: UIImage(named: "rating_icon")!, title: "Rating", rightImage: UIImage(named: "selected_icon")!, tag: 1)
+    var priceOptionView = AppUIComponents.getFilterOptionView(leftImage: UIImage(named: "price_icon")!, title: "Price", rightImage: UIImage(named: "unselected_icon")!, tag: 2)
+    
+    
     
     //MARK: Create Constraint
     var catagoryCollectionViewHeightConstraint: NSLayoutConstraint!
@@ -46,16 +77,24 @@ class HomeVC: UIViewController {
     
     
     //MARK: override function
-    override func viewDidLoad() {
+    override func viewDidLoad()  {
         super.viewDidLoad()
         self.view.backgroundColor = .whiteColour
         setupConstraintTitleBarView()
         setupConstraintCatagoryCollectionView()
         setupCollectionView()
         setupViewProductCillectionVIewContraints()
-        viewModel.fetchProductDetailsAPI()
+       
         bindUI()
         changeProductCollectionViewTopConstraint(to: -35)
+        setupFilterView()
+        Task {
+            await viewModel.fetchProductDetailsAPI()
+        }
+    }
+    
+    func apiCall() async{
+        
     }
 
     
@@ -121,6 +160,73 @@ class HomeVC: UIViewController {
         productCollectionView.reloadData()
     }
     
+    func setupFilterView() {
+        blurView.isHidden = true
+        filterView.isHidden = true
+        view.addSubview(blurView)
+        view.addSubview(filterImageView)
+        view.addSubview(filterView)
+        filterView.addSubview(filterTitleLabel)
+        filterView.addSubview(ratingOptionView)
+        filterView.addSubview(priceOptionView)
+        
+        NSLayoutConstraint.activate([
+            filterImageView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -16),
+            filterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            filterImageView.heightAnchor.constraint(equalToConstant: 50),
+            filterImageView.widthAnchor.constraint(equalToConstant: 50 ),
+            
+            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            blurView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            blurView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
+            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
+            
+            filterView.bottomAnchor.constraint(equalTo: filterImageView.topAnchor, constant: -16),
+            filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            filterView.widthAnchor.constraint(equalToConstant: 320),
+            filterView.heightAnchor.constraint(equalToConstant: 147),
+            
+            filterTitleLabel.trailingAnchor.constraint(equalTo: filterView.trailingAnchor, constant: -10),
+            filterTitleLabel.leadingAnchor.constraint(equalTo: filterView.leadingAnchor, constant: 10),
+            filterTitleLabel.topAnchor.constraint(equalTo: filterView.topAnchor, constant: 10),
+            
+            
+            ratingOptionView.topAnchor.constraint(equalTo: filterTitleLabel.bottomAnchor, constant: 10),
+            ratingOptionView.leadingAnchor.constraint(equalTo: filterView.leadingAnchor, constant: 0),
+            ratingOptionView.trailingAnchor.constraint(equalTo: filterView.trailingAnchor, constant: 0),
+            
+            priceOptionView.topAnchor.constraint(equalTo: ratingOptionView.bottomAnchor, constant: 0),
+            priceOptionView.leadingAnchor.constraint(equalTo: filterView.leadingAnchor, constant: 0),
+            priceOptionView.trailingAnchor.constraint(equalTo: filterView.trailingAnchor, constant: 0),
+            priceOptionView.bottomAnchor.constraint(equalTo: filterView.bottomAnchor, constant: 0)
+        ])
+        filterImageView.isUserInteractionEnabled = true
+        filterView.backgroundColor = .filter_view_color
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(filterImageTapped))
+        filterImageView.addGestureRecognizer(tapGesture)
+        let ratingGesture = UITapGestureRecognizer(target: self, action: #selector(ratingViewTapped))
+        ratingOptionView.addGestureRecognizer(ratingGesture)
+        let priceGesture = UITapGestureRecognizer(target: self, action: #selector(priceViewTapped))
+        priceOptionView.addGestureRecognizer(priceGesture)
+    }
+    
+    
+ 
+    func setFilterOption(isRating: Bool) {
+        if let leftImageView = ratingOptionView.subviews.first(where: { $0.tag == 1 }) as? UIImageView {
+            leftImageView.image = (isRating) ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
+            print("Rating tapped")
+        }
+        if let leftImageView = priceOptionView.subviews.first(where: { $0.tag == 2 }) as? UIImageView {
+            print("Price tapped")
+            leftImageView.image = (!isRating)  ? UIImage(named: "selected_icon") :  UIImage(named: "unselected_icon")
+        }
+        
+    }
+    
+
     
     
     /// To create a custom layout in a linear cell
@@ -156,6 +262,24 @@ class HomeVC: UIViewController {
         applledOfferValueLabel.text = ""
     }
     
+    @objc func ratingViewTapped(_ gesture: UITapGestureRecognizer) {
+        setFilterOption(isRating: true)
+    }
+    
+    @objc func priceViewTapped(_ gesture: UITapGestureRecognizer) {
+        setFilterOption(isRating: false)
+    }
+    
+    @objc func filterImageTapped() {
+        showOrHideFilterView(show: blurView.isHidden)
+    }
+    
+    @objc func showOrHideFilterView(show: Bool) {
+        blurView.isHidden = !show
+        filterView.isHidden = !show
+    }
+    
+    
     //MARK: Other function
     func changeProductCollectionViewTopConstraint(to constant: CGFloat) {
             UIView.animate(withDuration: 0.3) {
@@ -190,7 +314,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         if viewModel.isWaterFallLayout {
             let isEvenCell = indexPath.row % 2 == 0
             var cellHeight: CGFloat = isEvenCell ? 300 : 350
-            if !(viewModel.productDetails?.products?[indexPath.row].isFav ?? false) {
+            if !(viewModel.products?[indexPath.row].isFav ?? false) {
                 cellHeight += 50
             }
             cellHeight += 30
@@ -208,7 +332,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         case self.productCollectionView:
             return viewModel.products?.count ?? 0
         default:
-            return showCardList ? (viewModel.productDetails?.cardOffers?.count ?? 0) : 0
+            return showCardList ? (viewModel.cardOffers?.count ?? 0) : 0
         }
     }
     
@@ -216,14 +340,14 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         switch collectionView {
         case  self.categoryCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as! CategoryCollectionViewCell
-            if let category = viewModel.categorys?[indexPath.item] {
-                cell.configure(with: category)
+            if let category = viewModel.categorys?[indexPath.row] {
+                cell.configure(with: category,with: self.viewModel.searchValue.isEmpty,count: viewModel.products?.count ?? 0,with: indexPath.row == viewModel.selectedCategoryIndex)
             }
             return cell
         case productCollectionView:
             if viewModel.isWaterFallLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaterFallLayoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WaterFallLayoutCollectionViewCell
-                cell.product = viewModel.products?[indexPath.row]
+//                cell.product = viewModel.products?[indexPath.row]
                 if let product = viewModel.products?[indexPath.row] {
                     cell.updateCell(product: product)
                 }
@@ -234,7 +358,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
                 return cell
             } else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LinearCollectionViewCell.reuseIdentifier, for: indexPath) as! LinearCollectionViewCell
-                cell.product = viewModel.products?[indexPath.row]
+//                cell.product = viewModel.products?[indexPath.row]
                 if let product = viewModel.products?[indexPath.row] {
                     cell.updateCell(product: product)
                 }
@@ -243,7 +367,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             }
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCardCollectionViewCell.identifier, for: indexPath) as! OfferCardCollectionViewCell
-            guard let cardOffer = viewModel.productDetails?.cardOffers?[indexPath.item] else {
+            guard let cardOffer = viewModel.cardOffers?[indexPath.item] else {
                 return UICollectionViewCell()
             }
             var color = [CGColor]()
@@ -264,12 +388,14 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: OfferCardListView.reuseIdentifier, for: indexPath) as! OfferCardListView
                 headerView.offerCollectionView.delegate = self
                 headerView.offerCollectionView.dataSource = self
-                headerView.configureData(data:  viewModel.productDetails?.cardOffers, isOfferAdded: isOfferSelected)
+                headerView.configureData(data:  viewModel.cardOffers, isOfferAdded: isOfferSelected)
                 headerView.applledOfferValueLabel.text = viewModel.selectedCardOffer?.cardName
                 headerView.removeOfferTapped = { view in
                     self.isOfferSelected.toggle()
                     self.productCollectionView.collectionViewLayout.invalidateLayout()
                     self.productCollectionView.reloadData()
+                    self.viewModel.filterByCardOfferID(with: nil)
+
                 }
                 self.headerView = headerView
                 print("headerView refreshed ***********************")
@@ -285,13 +411,16 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             
             switch collectionView {
             case  self.categoryCollectionView:
-                let text = viewModel.productDetails?.category?[indexPath.row].name ?? ""
+                var text = viewModel.categorys?[indexPath.row].name
+                if !(viewModel.searchValue.isEmpty) && (viewModel.selectedCategoryIndex == indexPath.row) {
+                    text =  "\(text ?? "") (\(viewModel.products?.count ?? 0))"
+                }
                 let label = UILabel()
                 label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
                 label.text = text
                 label.sizeToFit()
                 let width = label.frame.width
-                return CGSize(width: width + 20, height: label.frame.height + 14)
+                return CGSize(width: width + 23, height: label.frame.height + 14)
                 
             default:
                 return showCardList ? CGSize(width: view.frame.size.width - 90, height: 130) : .zero
@@ -301,7 +430,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
         case categoryCollectionView:
-            print(indexPath.row)
             viewModel.actionOnSelectedCategory(index: indexPath.row)
         case productCollectionView:
            break
@@ -309,6 +437,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             isOfferSelected = true
             headerView?.applledOfferValueLabel.text = viewModel.cardOffers?[indexPath.row].cardName
             viewModel.selectedCardOffer = viewModel.cardOffers?[indexPath.row]
+            viewModel.filterByCardOfferID(with: viewModel.cardOffers?[indexPath.row].id ?? "")
             productCollectionView.collectionViewLayout.invalidateLayout()
             self.productCollectionView.reloadData()
             
@@ -325,21 +454,25 @@ extension HomeVC: TitleBarViewDelegate {
     
     func didUpdateSearchResults(_ searchText: String) {
         print("searchText ====> \(searchText)")
+        viewModel.filterProducts(with: searchText)
     }
     
     func didCancelSearch() {
-        switchCollectionLayout()
+//        switchCollectionLayout()
     }
     
     /// Method to change waterfall or linear layout
     func switchCollectionLayout() {
+        //todo
         productCollectionView.collectionViewLayout.invalidateLayout()
         if viewModel.isWaterFallLayout {
-            productCollectionView.setCollectionViewLayout(layout, animated: false, completion: {_ in 
-                self.productCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            productCollectionView.setCollectionViewLayout(layout, animated: false, completion: {_ in
+                self.productCollectionView.setContentOffset(.zero, animated: false)
             })
         } else {
-            productCollectionView.setCollectionViewLayout(createLayout(), animated: false)
+            productCollectionView.setCollectionViewLayout(createLayout(), animated: false, completion: {_ in
+                self.productCollectionView.setContentOffset(.zero, animated: false)
+            })
         }
         self.productCollectionView.reloadData()
     }
@@ -349,8 +482,9 @@ extension HomeVC: TitleBarViewDelegate {
 
 extension HomeVC: OfferListViewDelegate {
     func removeSelectedOffer() {
-        viewModel.selectedCardOffer = nil
-        self.productCollectionView.collectionViewLayout.invalidateLayout()
+//        viewModel.selectedCardOffer = nil
+//        viewModel.filterByCardOfferID(with: nil)
+//        self.productCollectionView.collectionViewLayout.invalidateLayout()
     }
 }
 
@@ -358,7 +492,7 @@ extension HomeVC: ProductCollectionViewCellDelegate {
     
     func addOrRemoveFromFavList<T: UICollectionViewCell>(isAdd: Bool, _ cell: T) {
         if let indexPath = productCollectionView.indexPath(for: cell) {
-            viewModel.productDetails?.products?[indexPath.row].isFav.toggle()
+            viewModel.products?[indexPath.row].isFav.toggle()
             productCollectionView.collectionViewLayout.invalidateLayout()
             productCollectionView.reloadData()
         }
@@ -380,8 +514,9 @@ extension HomeVC {
         
         viewModel.categorysService.bind { newValue in
             let (firstValue, secondValue) = newValue
-            if let SelectedIndex = firstValue {
-                self.categoryCollectionView.reloadItems(at: [IndexPath(row: SelectedIndex, section: 0)])
+            if let selectedIndex = firstValue {
+//                self.categoryCollectionView.reloadData()
+                self.categoryCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
                 //                self.filtterCollectionView.reloadData()
             }
             if let lastSelectedIndex = secondValue {
@@ -401,9 +536,13 @@ extension HomeVC {
             
         }
         
-        viewModel.productSerview.bind {  [unowned self] isLoad in
-//
-            switchCollectionLayout()
+        viewModel.productSerview.bind {  [unowned self] isSearchFilter in
+            if isSearchFilter {
+                productCollectionView.reloadData()
+            }else {
+                switchCollectionLayout()
+            }
+            
         }
       
         viewModel.apiService.bind { [unowned self] in
@@ -412,28 +551,24 @@ extension HomeVC {
             case .loading:
                 print("Start Loading")
             case .populated:
-                print("populate the value")
                 DispatchQueue.main.async {
                     self.categoryCollectionView.reloadData()
-                    self.productCollectionView.reloadData()
-//                    self.offerCollectionView.reloadData()
-
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                    DispatchQueue.main.async {
-                        self.categoryCollectionView.reloadData()
-//                        self.offerCollectionView.reloadData()
-                        self.updateCollectionViewHeight()
-//                        self.offerCollectionView.reloadData()
-                    }
-                })
-                
-            case .error:
+            case .error(let error):
+                showErrorAlert(message: error)
                 print("Fascing the error")
-                
+              
             }
         }
         
     }
-   
+    
+    func showErrorAlert(message: String) {
+            let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
 }

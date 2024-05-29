@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="CardOffers" representedClassName="CardOffers" syncable="YES">
         <attribute name="cardName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -14,10 +14,11 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ProductsList" representedClassName="ProductsList" syncable="YES">
-        <attribute name="cardOfferId" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="cardOfferId" optional="YES" attributeType="String" customClassName="[String]"/>
         <attribute name="categoryId" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="imageUrl" optional="YES" attributeType="String"/>
+        <attribute name="isFav" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="productDescription" optional="YES" attributeType="String"/>
