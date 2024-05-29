@@ -125,21 +125,19 @@ class HomeVC: UIViewController {
     }
     
     func setupConstraintCatagoryCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 6
-        layout.minimumLineSpacing = 10
-        categoryCollectionView = AppUIComponents.createCollectionView(layout: layout,dataSource: self, delegate: self,cellClass: CategoryCollectionViewCell.self,
+        categoryCollectionView = AppUIComponents.createCollectionView(layout: createCategoryLayoutSection(),dataSource: self, delegate: self,cellClass: CategoryCollectionViewCell.self,
                  reuseIdentifier: CategoryCollectionViewCell.identifier )
         view.addSubview(categoryCollectionView)
         NSLayoutConstraint.activate([
-            categoryCollectionView.topAnchor.constraint(equalTo: titleBarView.bottomAnchor, constant: 5),
-            categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            categoryCollectionView.topAnchor.constraint(equalTo: titleBarView.bottomAnchor, constant: 12),
+            categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
         ])
-        catagoryCollectionViewHeightConstraint = categoryCollectionView.heightAnchor.constraint(lessThanOrEqualToConstant:  80)
+        categoryCollectionView.isScrollEnabled = false
+        catagoryCollectionViewHeightConstraint = categoryCollectionView.heightAnchor.constraint(equalToConstant: 74)
         catagoryCollectionViewHeightConstraint.isActive = true
     }
+    
     
     private func registerCollectionViewCells() {
         productCollectionView.register(WaterFallLayoutCollectionViewCell.self, forCellWithReuseIdentifier: WaterFallLayoutCollectionViewCell.reuseIdentifier)
@@ -235,6 +233,20 @@ class HomeVC: UIViewController {
                 section.boundarySupplementaryItems = [sectionHeader]
             }
             section.interGroupSpacing = 8
+            return section
+        }
+    }
+    
+    func createCategoryLayoutSection() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
+
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .estimated(30), heightDimension: .absolute(32)))
+            item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .none, top: .none, trailing: .fixed(6), bottom: .none)
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize.init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50)), subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.interGroupSpacing = 10
             return section
         }
     }
@@ -341,7 +353,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         case  self.categoryCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as! CategoryCollectionViewCell
             if let category = viewModel.categorys?[indexPath.row] {
-                cell.configure(with: category,with: self.viewModel.searchValue.isEmpty,count: viewModel.products?.count ?? 0,with: indexPath.row == viewModel.selectedCategoryIndex)
+                cell.configure(with: category,with: self.viewModel.searchValue?.isEmpty == false,count: viewModel.products?.count ?? 0,with: indexPath.row == viewModel.selectedCategoryIndex)
             }
             return cell
         case productCollectionView:
@@ -412,17 +424,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             
             switch collectionView {
             case  self.categoryCollectionView:
-                var text = viewModel.categorys?[indexPath.row].name
-                if !(viewModel.searchValue.isEmpty) && (viewModel.selectedCategoryIndex == indexPath.row) {
-                    text =  "\(text ?? "") (\(viewModel.products?.count ?? 0))"
-                }
-                let label = UILabel()
-                label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-                label.text = text
-                label.sizeToFit()
-                let width = label.frame.width
-                return CGSize(width: width + 23, height: label.frame.height + 14)
-                
+                return .zero
             default:
                 return viewModel.showCardList ? CGSize(width: view.frame.size.width - 90, height: 130) : .zero
             }
@@ -466,7 +468,7 @@ extension HomeVC: TitleBarViewDelegate {
     func didCancelSearch() {
         viewModel.showCardList = true
         viewModel.searchValue = ""
-        viewModel.filterProductBySearch(with: viewModel.searchValue)
+        viewModel.filterProductBySearch(with: viewModel.searchValue ?? "")
 //        productCollectionView.reloadData()
     }
     
@@ -521,16 +523,19 @@ extension HomeVC {
     private func bindUI() {
         
         
-        viewModel.categorysService.bind { newValue in
+        viewModel.categorysService.bind { [unowned self] newValue in
             let (firstValue, secondValue) = newValue
-            if let selectedIndex = firstValue {
-//                self.categoryCollectionView.reloadData()
-                self.categoryCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
-                //                self.filtterCollectionView.reloadData()
-            }
-            if let lastSelectedIndex = secondValue {
-                self.categoryCollectionView.reloadItems(at: [IndexPath(row: lastSelectedIndex, section: 0)])
-            }
+//            if let selectedIndex = firstValue {
+////                self.categoryCollectionView.reloadData()
+//                self.categoryCollectionView.reloadItems(at: [IndexPath(row: selectedIndex, section: 0)])
+//                //                self.filtterCollectionView.reloadData()
+//            }
+//            if let lastSelectedIndex = secondValue {
+//                self.categoryCollectionView.reloadItems(at: [IndexPath(row: lastSelectedIndex, section: 0)])
+//            }
+            self.categoryCollectionView.reloadData()
+            
+            self.updateCollectionViewHeight()
         }
         
         viewModel.cardOfferSerview.bind { [self] cardOffer in

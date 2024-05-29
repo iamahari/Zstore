@@ -36,10 +36,10 @@ class CategoryCollectionViewCell: UICollectionViewCell {
 
     //MARK: Update Cell
     func configure(with category: CategoryList,with isSearch: Bool,count productCount: Int,with isSelecedProduct: Bool) {
-        if isSearch {
-            label.text = category.name ?? ""
-        }else{
+        if isSearch && isSelecedProduct {
             label.text = "\(category.name ?? "") (\(productCount))"
+        }else{
+            label.text = category.name ?? ""
         }
         label.textColor = (isSelecedProduct) ? .orangeColour : .fav_button_text_color
         contentView.backgroundColor = (isSelecedProduct) ? .orangeColour.withAlphaComponent(0.1) : .white

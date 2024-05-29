@@ -33,7 +33,7 @@ class HomeVM {
     var categorys: [CategoryList]?
     var cardOffers: [CardOffers]?
     var selectedCardOffer: CardOffers?
-    var searchValue = ""
+    var searchValue: String?
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
