@@ -37,6 +37,9 @@ extension UIImageView {
     
             DispatchQueue.main.async {
                 self.image = downloadedImage
+//                self.contentMode = .scaleAspectFit
+                
+                
             }
         }
         dataTask.resume()

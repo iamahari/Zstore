@@ -232,13 +232,16 @@ class HomeVC: UIViewController {
     //MARK: Button Action
 
     @objc func ratingViewTapped(_ gesture: UITapGestureRecognizer) {
+        self.productCollectionView.setContentOffset(.zero, animated: false)
         setFilterOption(isRating: true)
         viewModel.isFilterByRating = true
         showOrHideFilterView(show: false)
         viewModel.filterByCardOfferID(with: viewModel.selectedCardOffer?.id)
+        
     }
     
     @objc func priceViewTapped(_ gesture: UITapGestureRecognizer) {
+        self.productCollectionView.setContentOffset(.zero, animated: false)
         setFilterOption(isRating: false)
         viewModel.isFilterByRating = false
         showOrHideFilterView(show: false)
@@ -303,6 +306,23 @@ class HomeVC: UIViewController {
             })
         }
         self.productCollectionView.reloadData()
+    }
+    
+    
+    func showPopup(errorMesage: String) {
+        let alertController = UIAlertController(title: "Alert", message: errorMesage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            print("OK tapped")
+        }
+        alertController.addAction(okAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            print("Cancel tapped")
+        }
+        alertController.addAction(cancelAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
     }
 }
 
@@ -382,7 +402,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         case productCollectionView:
             if viewModel.isWaterFallLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaterFallLayoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WaterFallLayoutCollectionViewCell
-//                cell.indexPath = indexPath
                 cell.titleLabel.numberOfLines = ((indexPath.row )%2 == 0) ? 2 : 4
                 cell.descriptionLabel.numberOfLines = ((indexPath.row )%2 == 0) ? 2 : 3
                 if let product = viewModel.products?[indexPath.row] {
@@ -526,7 +545,8 @@ extension HomeVC {
                     self.categoryCollectionView.reloadData()
                 }
             case .error(let error):
-                print("Fascing the error \(error)")
+                showPopup(errorMesage: "Fascing the error \(error)")
+                FullScreenLoader.shared.stopLoading()
             }
         }
     }

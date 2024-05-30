@@ -60,8 +60,9 @@ class CustomSearchView: UIView {
         addSubview(cancelButton)
         
         searchContainerView.setCornerRadius(radius: 18)
-        searchContainerView.setBorder(borderWidth: 1, color: .gray_color)
         
+        searchContainerView.setBorder(borderWidth: 1, color: .gray_color)
+        textField.tintColor = .orangeColour
         textField.delegate = self
         
         NSLayoutConstraint.activate([

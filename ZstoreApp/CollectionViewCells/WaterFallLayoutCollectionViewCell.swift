@@ -21,7 +21,7 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     lazy var favButtonTextLabel = AppUIComponents.createLabel(text:"Add to Fav",textColor: .fav_button_text_color, textAlignment: .left,font:  UIFont.systemFont(ofSize: 13, weight: .semibold))
     let infoStackView = AppUIComponents.createStackView(axis: .vertical, alignment: .fill, distribution: .fill, spacing: 4)
     lazy var titleLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font:  UIFont.font(with: 18, family: FontType.medium))
-
+    
     let ratingVew: RatingView = {
         let view = RatingView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -32,10 +32,10 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     lazy var oldPriceLabel = AppUIComponents.createLabel(text:"",textColor:  .gray_color, textAlignment: .left,font:  UIFont.font(with: 13, family: FontType.regular))
     lazy var descriptionLabel = AppUIComponents.createLabel(text:"",textColor:  .description_colour, textAlignment: .left,font: UIFont.font(with: 13, family: FontType.regular))
     lazy var savedPriceButton = AppUIComponents.createButton(title: "", backgroundColor: .green_colour, titleColor: .white_colour, font: UIFont.font(with: 13, family: FontType.medium))
-        
+    
     //MARK: Callback
     var actionOnCallBack: ((Bool) -> Void)?
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -99,7 +99,7 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             heartImageView.leadingAnchor.constraint(equalTo: addToFavButtonView.leadingAnchor,constant: 8),
             heartImageView.heightAnchor.constraint(equalToConstant: 24),
             heartImageView.widthAnchor.constraint(equalToConstant: 24),
-
+            
             favButtonTextLabel.centerYAnchor.constraint(equalTo: addToFavButtonView.centerYAnchor),
             favButtonTextLabel.leadingAnchor.constraint(equalTo: heartImageView.trailingAnchor, constant: 2),
             favButtonTextLabel.trailingAnchor.constraint(equalTo: addToFavButtonView.trailingAnchor, constant: -8),
@@ -147,6 +147,9 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     func updateCell(product: ProductsList,with selectedCardOffer: CardOffers?) {
         if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
+            
+            //MARK: Use scaleAspectFill only for the booking category because the image does not fit in Figma.
+            productImageView.contentMode = product.categoryId == "100023" ? .scaleAspectFill : .scaleAspectFit
         }
         titleLabel.text = product.name
         priceLabel.text = String(Utils.formatAsIndianCurrency(product.price) ?? "")
@@ -175,12 +178,12 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     @objc func dismissFavorite() {
         actionOnCallBack?(false)
     }
-
+    
     /// Adds the favorite action callback.
     @objc func addFavorite() {
         actionOnCallBack?(true)
     }
-
+    
     /// Handles tap gestures on UILabels to open URLs if available in attributed text.
     ///
     /// - Parameter gesture: The UITapGestureRecognizer instance.
@@ -199,7 +202,7 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-
+    
     //MARK: Other function
     
     /// Shows or dismisses the favorite button view.
