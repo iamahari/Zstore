@@ -54,7 +54,7 @@ class WaterfallLayout: UICollectionViewFlowLayout {
             attributes.frame = frame
             cache.append(attributes)
             contentHeight = max(contentHeight, frame.maxY)
-            yOffset[column] = yOffset[column] + height + ((item != 0 && item != 1 ) ? 10 : 0)
+            yOffset[column] = yOffset[column] + height
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
         }
     }

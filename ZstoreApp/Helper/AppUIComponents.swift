@@ -40,7 +40,7 @@ class AppUIComponents {
 
 
     
-    static func createLabel(text: String, textColor: UIColor = .black, textAlignment: NSTextAlignment = .center, font: UIFont = UIFont.systemFont(ofSize: 17)) -> UILabel {
+    static func createLabel(text: String, textColor: UIColor = .black, textAlignment: NSTextAlignment = .center, font: UIFont = UIFont.font(with: 13, family: FontType.medium)) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = textColor

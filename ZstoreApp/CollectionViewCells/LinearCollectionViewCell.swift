@@ -27,12 +27,7 @@ class LinearCollectionViewCell: UICollectionViewCell {
     lazy var oldPriceLabel = AppUIComponents.createLabel(text:"",textColor: .gray_color, textAlignment: .left,font: UIFont.font(with: 13, family: FontType.regular))
     lazy var descriptionLabel = AppUIComponents.createLabel(text:"",textColor: .description_colour, textAlignment: .left,font:  UIFont.font(with: 13, family: FontType.regular))
     lazy var createTextView = AppUIComponents.createTextView()
-    let savedPriceButton = CustomButton(backgroundColor: .green_colour,
-                                         titleAlignment: .center,
-                                        titleFont: UIFont.systemFont(ofSize: 5),
-                                         titleColor: .white_colour,
-                                         contentInsets: NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8),
-                                         isUserInteractionEnabled: false)
+    lazy var savedPriceButton = AppUIComponents.createButton(title: "", backgroundColor: .green_colour, titleColor: .white_colour, font: UIFont.font(with: 13, family: FontType.medium))
     lazy var colorsContainerView = AppUIComponents.createView()
     
     // MARK: Overide function
@@ -125,17 +120,17 @@ class LinearCollectionViewCell: UICollectionViewCell {
         descriptionLabel.attributedText = Utils.getModifiedString(product.productDescription ?? "")
         ratingVew.addRatingsDetails(with: product)
         if let color = product.colors {
-            colorsStackView.isHidden = false
+            colorsContainerView.isHidden = false
             let colorsArray = color.split(separator: ",").map { String($0) }
             setupColorsView(colors: colorsArray)
         }else{
-            colorsStackView.isHidden = true
+            colorsContainerView.isHidden = true
         }
         isOfferApplied(isApplied: true)
         guard let selectedCardOffer = selectedCardOffer else{return}
         oldPriceLabel.attributedText = Utils.markText(Utils.formatAsIndianCurrency(product.price) ?? "")
         priceLabel.text = String(Utils.calculateDiscountedPrice(product.price, selectedCardOffer.percentage))
-        lazy var savedPriceButton = AppUIComponents.createButton(title: "", backgroundColor: .green_colour, titleColor: .white_colour, font: UIFont.font(with: 13, family: FontType.medium))
+        savedPriceButton.setTitle( "Save \(Utils.calculateDiscountSevedPrice(product.price, selectedCardOffer.percentage))", for: .normal)
         isOfferApplied(isApplied: false)
        
     }

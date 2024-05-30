@@ -16,6 +16,7 @@ extension UIImageView {
     func loadImage(from url: URL) {
         let cacheKey = url.absoluteString
         
+        self.image = UIImage(named: "iconImage")
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.startAnimating()

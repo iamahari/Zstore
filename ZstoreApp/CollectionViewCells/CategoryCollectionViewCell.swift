@@ -12,7 +12,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
     
     // MARK: Create the UI components
-    var label = AppUIComponents.createLabel(text: "",textColor: .fav_button_text_color,font:  UIFont.systemFont(ofSize: 15, weight: .medium))
+    var label = AppUIComponents.createLabel(text: "",textColor: .fav_button_text_color,font:   UIFont.font(with: 15, family: FontType.medium))
     
 
     override init(frame: CGRect) {
@@ -43,6 +43,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         }
         label.textColor = (isSelecedProduct) ? .orangeColour : .fav_button_text_color
         contentView.backgroundColor = (isSelecedProduct) ? .orangeColour.withAlphaComponent(0.1) : .white
-        contentView.setBorder(borderWidth: 1, color: (isSelecedProduct) ? .orangeColour : .fav_button_text_color)
+        contentView.setBorder(borderWidth: 1, color: (isSelecedProduct) ? .orangeColour : .fav_button_border_color)
     }
 }

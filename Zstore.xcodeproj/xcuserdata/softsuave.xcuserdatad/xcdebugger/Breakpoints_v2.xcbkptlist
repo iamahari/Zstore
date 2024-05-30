@@ -135,22 +135,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "43E836FD-C975-4E04-A0FF-7A76FB97B0E9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZstoreApp/Home/HomeVM.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "actionOnSelectedCategory(index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "95E90724-1AAB-4EA1-8F80-045F425C3F4D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -233,6 +217,66 @@
                   moduleName = "Zstore"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/softsuave/Documents/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "FEC1198E-BDD2-48C4-ACDF-5189F30567E4 - 2c18cc8facad02b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  uuid = "FEC1198E-BDD2-48C4-ACDF-5189F30567E4 - faa283399563e35a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "FEC1198E-BDD2-48C4-ACDF-5189F30567E4 - 33c6b55c3abad2ab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "140">
+               </Location>
+               <Location
+                  uuid = "FEC1198E-BDD2-48C4-ACDF-5189F30567E4 - 91269727c4e7aaa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
@@ -327,6 +371,66 @@
                   moduleName = "Zstore"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/softsuave/Documents/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "2F6CA992-0850-43FE-9689-261BB831C8E0 - 2c18cc8facad02b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  uuid = "2F6CA992-0850-43FE-9689-261BB831C8E0 - faa283399563e35a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "2F6CA992-0850-43FE-9689-261BB831C8E0 - 33c6b55c3abad2ab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "140">
+               </Location>
+               <Location
+                  uuid = "2F6CA992-0850-43FE-9689-261BB831C8E0 - 91269727c4e7aaa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for Zstore.HomeVM.fetchProductDetailsAPI() async -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/Home/HomeVM.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
@@ -475,6 +579,66 @@
                   endingLineNumber = "26"
                   offsetFromSymbolStart = "48">
                </Location>
+               <Location
+                  uuid = "0D1CA67E-E94D-4756-8840-F04F94A7A4D5 - 1ed31657e038b7aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "272">
+               </Location>
+               <Location
+                  uuid = "0D1CA67E-E94D-4756-8840-F04F94A7A4D5 - f38cdae31ffff7f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "0D1CA67E-E94D-4756-8840-F04F94A7A4D5 - 180c2abca51fba8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "0D1CA67E-E94D-4756-8840-F04F94A7A4D5 - 35b18e376a483ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "48">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -549,6 +713,36 @@
                   moduleName = "Zstore"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/softsuave/Documents/Zstore/ZstoreApp/DataManager/APIDataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "408">
+               </Location>
+               <Location
+                  uuid = "D3E41F5E-2C9D-4ABE-A957-5D22021978C7 - f0cab1ce87fed46c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Zstore.APIDataManager.fetch() async throws -&gt; Zstore.ProductDetails"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/APIDataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "216">
+               </Location>
+               <Location
+                  uuid = "D3E41F5E-2C9D-4ABE-A957-5D22021978C7 - f0cab1ce87fed46c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Zstore.APIDataManager.fetch() async throws -&gt; Zstore.ProductDetails"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/APIDataManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "20"
@@ -663,6 +857,96 @@
                   endingLineNumber = "37"
                   offsetFromSymbolStart = "268">
                </Location>
+               <Location
+                  uuid = "99B4709F-D887-4A2C-AAAF-365C73C55DB2 - 1c2dab721e1f8d33"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "504">
+               </Location>
+               <Location
+                  uuid = "99B4709F-D887-4A2C-AAAF-365C73C55DB2 - 1ed31657e038493d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "504">
+               </Location>
+               <Location
+                  uuid = "99B4709F-D887-4A2C-AAAF-365C73C55DB2 - b5ad8fac8bc139"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "312">
+               </Location>
+               <Location
+                  uuid = "99B4709F-D887-4A2C-AAAF-365C73C55DB2 - 83ccc27d8397233a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "99B4709F-D887-4A2C-AAAF-365C73C55DB2 - 35b18e376a47d3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "208">
+               </Location>
+               <Location
+                  uuid = "99B4709F-D887-4A2C-AAAF-365C73C55DB2 - b820c0358536c2d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "268">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -726,6 +1010,51 @@
                   endingLineNumber = "35"
                   offsetFromSymbolStart = "220">
                </Location>
+               <Location
+                  uuid = "E8237047-6661-4F40-A4BD-9FB90EBECF47 - 83ccc27d83972374"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "E8237047-6661-4F40-A4BD-9FB90EBECF47 - 35b18e376a47d75"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  uuid = "E8237047-6661-4F40-A4BD-9FB90EBECF47 - b820c0358536c29e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for static Zstore.DataManager.fetch() async throws -&gt; (Swift.Array&lt;Zstore.CategoryList&gt;, Swift.Array&lt;Zstore.CardOffers&gt;, Swift.Array&lt;Zstore.ProductsList&gt;)"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/DataManager/DataManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "220">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -743,6 +1072,102 @@
             endingLineNumber = "142"
             landmarkName = "fetchProductDetailsAPI()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AC57673E-697F-47B9-B101-3EDB02965090"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZstoreApp/CollectionViewCells/LinearCollectionViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "updateCell(product:with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AC57673E-697F-47B9-B101-3EDB02965090 - da6c1a9b73cf6909"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Zstore.LinearCollectionViewCell.updateCell(product: Zstore.ProductsList, with: Swift.Optional&lt;Zstore.CardOffers&gt;) -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/CollectionViewCells/LinearCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "1952">
+               </Location>
+               <Location
+                  uuid = "AC57673E-697F-47B9-B101-3EDB02965090 - da6c1a9b73cf6909"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Zstore.LinearCollectionViewCell.updateCell(product: Zstore.ProductsList, with: Swift.Optional&lt;Zstore.CardOffers&gt;) -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/CollectionViewCells/LinearCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "1744">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "011ACE10-38C5-4B0B-AC41-C6E5773120B1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZstoreApp/CollectionViewCells/LinearCollectionViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "updateCell(product:with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "011ACE10-38C5-4B0B-AC41-C6E5773120B1 - da6c1a9b73cf69a4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Zstore.LinearCollectionViewCell.updateCell(product: Zstore.ProductsList, with: Swift.Optional&lt;Zstore.CardOffers&gt;) -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/CollectionViewCells/LinearCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "2360">
+               </Location>
+               <Location
+                  uuid = "011ACE10-38C5-4B0B-AC41-C6E5773120B1 - da6c1a9b73cf69a4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Zstore.LinearCollectionViewCell.updateCell(product: Zstore.ProductsList, with: Swift.Optional&lt;Zstore.CardOffers&gt;) -&gt; ()"
+                  moduleName = "Zstore"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softsuave/Documents/untitled%20folder%202/Zstore/ZstoreApp/CollectionViewCells/LinearCollectionViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "2316">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

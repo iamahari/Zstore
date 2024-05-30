@@ -18,7 +18,7 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
     private let subtitleLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 12)
     private let cashbackLabel = AppUIComponents.createLabel(text: "",textColor: .white, fontSize: 16,isBold: true)
     private let imageView = AppUIComponents.createImageView(contentMode: .scaleAspectFill)
-    private let containerView = AppUIComponents.createView(backgroundColor: .black,cornerRadius: 10 )
+    private let containerView = AppUIComponents.createView(backgroundColor: .black,cornerRadius: 20 )
     private let overflowView = AppUIComponents.createView(backgroundColor: .clear,clipsToBounds: false)
 
     override init(frame: CGRect) {
@@ -42,6 +42,7 @@ class OfferCardCollectionViewCell: UICollectionViewCell {
     //MARK: Setup the constraint
     
     private func setupConstraints() {
+        containerView.setBorder(borderWidth: 1, color: .fav_button_border_color)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),

@@ -144,11 +144,10 @@ class OfferCardListView: UICollectionReusableView{
             applledOfferValueLabel.centerYAnchor.constraint(equalTo: appliedLabel.centerYAnchor),
             
             removeAppliedOfferBtn.leadingAnchor.constraint(equalTo: applledOfferValueLabel.trailingAnchor, constant: 2),
-            removeAppliedOfferBtn.centerYAnchor.constraint(equalTo: applledOfferValueLabel.centerYAnchor),
-            removeAppliedOfferBtn.heightAnchor.constraint(equalToConstant: 18),
-            removeAppliedOfferBtn.widthAnchor.constraint(equalToConstant: 18),
-            removeAppliedOfferBtn.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10)
-//            containerViewBottomConstraints
+            removeAppliedOfferBtn.centerYAnchor.constraint(equalTo: applledOfferValueLabel.centerYAnchor,constant: -1),
+            removeAppliedOfferBtn.heightAnchor.constraint(equalToConstant: 23),
+            removeAppliedOfferBtn.widthAnchor.constraint(equalToConstant: 23),
+            removeAppliedOfferBtn.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -5)
         ])
     }
     
