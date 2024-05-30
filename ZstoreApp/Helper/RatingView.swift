@@ -12,7 +12,7 @@ class RatingView: UIView {
     
     // MARK: Create the UI components
     let ratingCountLabel = AppUIComponents.createLabel(text: "",textColor: .orange_colour, font: UIFont.font(with: 11, family: FontType.semibold))
-    let reviewCountLabel = AppUIComponents.createLabel(text: "",textColor: .orange_colour, font:UIFont.font(with: 11, family: FontType.semibold))
+    let reviewCountLabel = AppUIComponents.createLabel(text: "",textColor: .gray_color, font:UIFont.font(with: 11, family: FontType.semibold))
     private let ratingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal

@@ -33,7 +33,7 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     lazy var descriptionLabel = AppUIComponents.createLabel(text:"",textColor:  .description_colour, textAlignment: .left,font: UIFont.font(with: 13, family: FontType.regular))
     let savedPriceButton = CustomButton(backgroundColor: .green_colour,
                                          titleAlignment: .center,
-                                         titleFont: UIFont.font(with: 11, family: FontType.medium),
+                                         titleFont: UIFont.font(with: 5, family: FontType.medium),
                                          titleColor: .white_colour,
                                          contentInsets: NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8),
                                          isUserInteractionEnabled: false)
@@ -156,6 +156,8 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
         }
+        titleLabel.numberOfLines = ((indexPath?.row ?? 0)%2 == 0) ? 2 : 0
+        descriptionLabel.numberOfLines = ((indexPath?.row ?? 0)%2 == 0) ? 2 : 0
         titleLabel.text = product.name
         priceLabel.text = String(Utils.formatAsIndianCurrency(product.price) ?? "")
         oldPriceLabel.attributedText = Utils.markText(String(product.price))

@@ -24,16 +24,14 @@ class HomeVC: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private var containerView = AppUIComponents.createView(cornerRadius: 15,borderWidth: 1,borderColor: UIColor.blue.cgColor)
-    private var appliedLabel = AppUIComponents.createLabel(text: "Applied: ",fontSize: 15)
-    private var applledOfferValueLabel = AppUIComponents.createLabel(text: "",fontSize: 15)
-    private var offerImg = AppUIComponents.createImageView(image: UIImage(systemName: "bolt.fill"),tintColor: .orangeColour)
     private var offerTitle = AppUIComponents.createLabel(text: "Offers")
     private var offerView = AppUIComponents.createView()
     var categoryCollectionView: UICollectionView!
     var productCollectionView: UICollectionView!
     
-    private var filterImageView = AppUIComponents.createImageView(image: UIImage(systemName:  "filter_icon"))
+    private var filterImageView = AppUIComponents.createImageView(image: UIImage(named: "filter_icon"))
+
+
     private var blurView = AppUIComponents.createView(backgroundColor: .blur_view_color)
     var filterView = AppUIComponents.createView(cornerRadius: 23)
     var filterOptionStackView = AppUIComponents.createStackView(axis: .horizontal, alignment: .fill, distribution: .fillEqually, spacing: 1)
@@ -41,6 +39,7 @@ class HomeVC: UIViewController {
     var ratingOptionView = AppUIComponents.getFilterOptionView(leftImage: UIImage(named: "rating_icon")!, title: "Rating", rightImage: UIImage(named: "selected_icon")!, tag: 1)
     var priceOptionView = AppUIComponents.getFilterOptionView(leftImage: UIImage(named: "price_icon")!, title: "Price", rightImage: UIImage(named: "unselected_icon")!, tag: 2)
     
+    var activityIndicator: UIActivityIndicatorView!
     
     
     //MARK: Create Constraint
@@ -65,16 +64,10 @@ class HomeVC: UIViewController {
         
         changeProductCollectionViewTopConstraint(to: -35)
         setupFilterView()
+        FullScreenLoader.shared.setUpLoaderView(viewController: self)
         Task {
             await viewModel.fetchProductDetailsAPI()
         }
-        FullScreenLoader.shared.startLoading()
-               
-               // Simulate some asynchronous task
-               DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                   // Call stopLoading to hide the loader
-                   FullScreenLoader.shared.stopLoading()
-               }
     }
     
     
@@ -232,12 +225,7 @@ class HomeVC: UIViewController {
     }
     
     //MARK: Button Action
-    @objc func actionOnRemoveOffer(_ sender: UIButton) {
-        changeProductCollectionViewTopConstraint(to: -35)
-        viewModel.selectedCardOffer = nil
-        applledOfferValueLabel.text = ""
-    }
-    
+
     @objc func ratingViewTapped(_ gesture: UITapGestureRecognizer) {
         setFilterOption(isRating: true)
         viewModel.isFilterByRating = true
@@ -370,8 +358,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             if viewModel.isWaterFallLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaterFallLayoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WaterFallLayoutCollectionViewCell
                 cell.indexPath = indexPath
-                cell.titleLabel.numberOfLines = (indexPath.row%2 == 0) ? 2 : 0
-                cell.descriptionLabel.numberOfLines = (indexPath.row%2 == 0) ? 2 : 0
                 if let product = viewModel.products?[indexPath.row] {
                     cell.updateCell(product: product,with: viewModel.selectedCardOffer)
                 }
@@ -504,25 +490,9 @@ extension HomeVC {
     
     private func bindUI() {
         
-        
         viewModel.categorysService.bind { [unowned self] newValue in
-            //            let (firstValue, secondValue) = newValue
-            
             self.categoryCollectionView.reloadData()
-            
             self.updateCollectionViewHeight()
-        }
-        
-        viewModel.cardOfferSerview.bind { [unowned self] cardOffer in
-            guard let cardOffer = cardOffer else {
-                changeProductCollectionViewTopConstraint(to: -30)
-                containerView.isHidden = true
-                return
-            }
-            changeProductCollectionViewTopConstraint(to: 10)
-            applledOfferValueLabel.text = cardOffer.cardName
-            containerView.isHidden = false
-            
         }
         
         viewModel.productSerview.bind {  [unowned self] isSearchFilter in
@@ -535,20 +505,16 @@ extension HomeVC {
         }
         
         viewModel.apiService.bind { [unowned self] in
-            var loader: FullScreenLoader?
             switch $0 {
             case .loading:
-                print("Start Loading")
-                DispatchQueue.main.async {
-                    loader?.startLoading()
-                }
-                
+                FullScreenLoader.shared.startLoading()
             case .populated:
+                FullScreenLoader.shared.stopLoading()
                 DispatchQueue.main.async {
                     self.categoryCollectionView.reloadData()
                 }
             case .error(let error):
-                print("Fascing the error")
+                print("Fascing the error \(error)")
                 
             }
         }

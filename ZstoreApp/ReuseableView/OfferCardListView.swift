@@ -121,8 +121,8 @@ class OfferCardListView: UICollectionReusableView{
             appliedLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             applledOfferValueLabel.leadingAnchor.constraint(equalTo: appliedLabel.trailingAnchor, constant: 5),
             applledOfferValueLabel.centerYAnchor.constraint(equalTo: appliedLabel.centerYAnchor),
-            removeAppliedOfferBtn.leadingAnchor.constraint(equalTo: applledOfferValueLabel.trailingAnchor, constant: 10),
-            removeAppliedOfferBtn.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            removeAppliedOfferBtn.leadingAnchor.constraint(equalTo: applledOfferValueLabel.trailingAnchor, constant: 5),
+            removeAppliedOfferBtn.centerYAnchor.constraint(equalTo: applledOfferValueLabel.centerYAnchor),
             removeAppliedOfferBtn.heightAnchor.constraint(equalToConstant: 20),
             removeAppliedOfferBtn.widthAnchor.constraint(equalToConstant: 20),
 

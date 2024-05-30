@@ -11,19 +11,14 @@ import UIKit
 
 class HomeVM {
     typealias IntPair = (Int?, Int?)
+    
+    //MARK: Call back service
     var apiService = Box<LoadState>(.loading)
     var categorysService =  Box<IntPair>((0,0))
-    var cardOfferSerview = Box<CardOffers?>(nil)
     var productSerview = Box<Bool>(false)
+    
+    //MARK: Variable
     var isFilterByRating = true
-    
-    
-    var listOfGradientColor = [[UIColor(hex: "#1A7EDA").cgColor, UIColor(hex: "#2BD1FF").cgColor],
-                               [UIColor(hex: "#FFA61E").cgColor, UIColor(hex: "#FD5261").cgColor],
-                               [UIColor(hex: "#F02374").cgColor, UIColor(hex: "#F51AEC").cgColor]]
-    
-    
-    
     var isWaterFallLayout = true
     var isOfferSelected = false
     var showCardList = true
@@ -34,8 +29,12 @@ class HomeVM {
     var cardOffers: [CardOffers]?
     var selectedCardOffer: CardOffers?
     var searchValue: String?
-    
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var listOfGradientColor = [[UIColor(hex: "#1A7EDA").cgColor,
+                                UIColor(hex: "#2BD1FF").cgColor],
+                               [UIColor(hex: "#FFA61E").cgColor, 
+                                UIColor(hex: "#FD5261").cgColor],
+                               [UIColor(hex: "#F02374").cgColor,
+                                UIColor(hex: "#F51AEC").cgColor]]
     
     /// Performs actions when a category is selected.
     ///
@@ -106,9 +105,7 @@ class HomeVM {
     ///   - isFav: A Boolean value indicating whether the product is marked as favorite.
     func updateFavList(with productId: String, isFav: Bool) {
         if let isFavAdd = coredate.updateIsFav(for: productId, to: isFav, isFilterByRating) {
-            if isFavAdd.isEmpty {
-                print("add fav")
-            } else {
+            if !isFavAdd.isEmpty {
                 apiService.value = .error(isFavAdd)
             }
         }

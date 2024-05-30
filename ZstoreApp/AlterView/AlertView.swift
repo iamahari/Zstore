@@ -8,47 +8,38 @@
 import Foundation
 import UIKit
 
-class FullScreenLoader: UIView {
+class FullScreenLoader {
     
     static let shared = FullScreenLoader()
     
     private var activityIndicatorView: UIActivityIndicatorView!
+    private var overlayBackgroundView: UIView!
     
-    private override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupLoader()
-    }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupLoader()
-    }
-    
-    private func setupLoader() {
-        // Configure activity indicator view
+    func setUpLoaderView(viewController: UIViewController) {
         activityIndicatorView = UIActivityIndicatorView(style: .large)
         activityIndicatorView.color = .gray
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(activityIndicatorView)
-        
-        // Center activity indicator view
-        NSLayoutConstraint.activate([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+        activityIndicatorView.center = viewController.view.center
+        activityIndicatorView.hidesWhenStopped = true
+//        overlayBackgroundView = UIView()
+//        overlayBackgroundView.frame = viewController.view.frame
+//        overlayBackgroundView.backgroundColor = .black
+//        overlayBackgroundView.alpha = 0.4
+//        overlayBackgroundView.addSubview(activityIndicatorView)
+        viewController.view.addSubview(activityIndicatorView)
     }
     
     func startLoading() {
         // Start animating the activity indicator
-        activityIndicatorView.startAnimating()
-        // Show the loader view
-        isHidden = false
+        DispatchQueue.main.async {
+            self.activityIndicatorView.startAnimating()
+        }
     }
     
     func stopLoading() {
         // Stop animating the activity indicator
-        activityIndicatorView.stopAnimating()
-        // Hide the loader view
-        isHidden = true
+        DispatchQueue.main.async {
+            self.activityIndicatorView.stopAnimating()
+        }
     }
 }

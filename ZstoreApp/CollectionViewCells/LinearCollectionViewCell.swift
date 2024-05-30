@@ -29,7 +29,7 @@ class LinearCollectionViewCell: UICollectionViewCell {
     lazy var createTextView = AppUIComponents.createTextView()
     let savedPriceButton = CustomButton(backgroundColor: .green_colour,
                                          titleAlignment: .center,
-                                         titleFont: UIFont.font(with: 11, family: FontType.medium),
+                                        titleFont: UIFont.systemFont(ofSize: 5),
                                          titleColor: .white_colour,
                                          contentInsets: NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8),
                                          isUserInteractionEnabled: false)
