@@ -59,29 +59,32 @@ class HomeVC: UIViewController {
         setupConstraintCatagoryCollectionView()
         setupCollectionView()
         setupViewProductCillectionVIewContraints()
-        
         bindUI()
-        
         changeProductCollectionViewTopConstraint(to: -35)
         setupFilterView()
         FullScreenLoader.shared.setUpLoaderView(viewController: self)
+//        dissmissTheKeyBorad()
         Task {
             await viewModel.fetchProductDetailsAPI()
         }
+       
     }
-    
+   
     
     //MARK: Setup the constraint
     private func setupCollectionView() {
         layout = WaterfallLayout()
         layout.numberOfColumns = 2
         layout.delegate = self
-        let searchCollectionView = UICollectionView(frame: .zero, collectionViewLayout:createLayout())
-        searchCollectionView.delegate = self
-        searchCollectionView.dataSource = self
-        productCollectionView = searchCollectionView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout:createLayout())
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        
+        productCollectionView = collectionView
         registerCollectionViewCells()
-        self.view.addSubview(searchCollectionView)
+        self.view.addSubview(collectionView)
     }
     
     // MARK: Setup the constraint
@@ -181,6 +184,8 @@ class HomeVC: UIViewController {
         ratingOptionView.addGestureRecognizer(ratingGesture)
         let priceGesture = UITapGestureRecognizer(target: self, action: #selector(priceViewTapped))
         priceOptionView.addGestureRecognizer(priceGesture)
+        let blurViewGesture = UITapGestureRecognizer(target: self, action: #selector(dissmissBlurVw))
+        blurView.addGestureRecognizer(blurViewGesture)
     }
     
     
@@ -229,12 +234,14 @@ class HomeVC: UIViewController {
     @objc func ratingViewTapped(_ gesture: UITapGestureRecognizer) {
         setFilterOption(isRating: true)
         viewModel.isFilterByRating = true
+        showOrHideFilterView(show: false)
         viewModel.filterByCardOfferID(with: viewModel.selectedCardOffer?.id)
     }
     
     @objc func priceViewTapped(_ gesture: UITapGestureRecognizer) {
         setFilterOption(isRating: false)
         viewModel.isFilterByRating = false
+        showOrHideFilterView(show: false)
         viewModel.filterByCardOfferID(with: viewModel.selectedCardOffer?.id)
     }
     
@@ -245,6 +252,10 @@ class HomeVC: UIViewController {
     @objc func showOrHideFilterView(show: Bool) {
         blurView.isHidden = !show
         filterView.isHidden = !show
+    }
+    
+    @objc func dissmissBlurVw(_ gesture: UITapGestureRecognizer) {
+        showOrHideFilterView(show: false)
     }
     
     
@@ -278,7 +289,21 @@ class HomeVC: UIViewController {
         }
     }
     
-    
+    /// Method to change waterfall or linear layout
+    func switchCollectionLayout() {
+        //todo
+        productCollectionView.collectionViewLayout.invalidateLayout()
+        if viewModel.isWaterFallLayout {
+            productCollectionView.setCollectionViewLayout(layout, animated: false, completion: {_ in
+                self.productCollectionView.setContentOffset(.zero, animated: false)
+            })
+        } else {
+            productCollectionView.setCollectionViewLayout(createLayout(), animated: false, completion: {_ in
+                self.productCollectionView.setContentOffset(.zero, animated: false)
+            })
+        }
+        self.productCollectionView.reloadData()
+    }
 }
 
 
@@ -318,7 +343,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             titleLabel.numberOfLines = isEvenCell ? 2 : 4
             titleLabel.sizeToFit()
             
-            cellHeight += titleLabel.frame.height //titele height
+            cellHeight += titleLabel.frame.height + (isEvenCell ? 0 : 6) //titele height
             
             titleLabel.font =  UIFont.font(with: 13, family: FontType.regular)
             titleLabel.numberOfLines = isEvenCell ? 2 : 0
@@ -357,12 +382,14 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         case productCollectionView:
             if viewModel.isWaterFallLayout {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaterFallLayoutCollectionViewCell.reuseIdentifier, for: indexPath) as! WaterFallLayoutCollectionViewCell
-                cell.indexPath = indexPath
+//                cell.indexPath = indexPath
+                cell.titleLabel.numberOfLines = ((indexPath.row )%2 == 0) ? 2 : 4
+                cell.descriptionLabel.numberOfLines = ((indexPath.row )%2 == 0) ? 2 : 3
                 if let product = viewModel.products?[indexPath.row] {
                     cell.updateCell(product: product,with: viewModel.selectedCardOffer)
                 }
                 cell.actionOnCallBack = { [weak self] isFav in
-                    self?.viewModel.products?[cell.indexPath?.row ?? 0].isFav = isFav
+                    self?.viewModel.products?[indexPath.row].isFav = isFav
                     self?.productCollectionView.reloadItems(at: [indexPath])
                     
                 }
@@ -390,6 +417,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if collectionView == productCollectionView,
            kind == UICollectionView.elementKindSectionHeader {
@@ -464,23 +494,6 @@ extension HomeVC: TitleBarViewDelegate {
         viewModel.filterProductBySearch(with: viewModel.searchValue ?? "")
     }
     
-    /// Method to change waterfall or linear layout
-    func switchCollectionLayout() {
-        //todo
-        productCollectionView.collectionViewLayout.invalidateLayout()
-        if viewModel.isWaterFallLayout {
-            productCollectionView.setCollectionViewLayout(layout, animated: false, completion: {_ in
-                self.productCollectionView.setContentOffset(.zero, animated: false)
-            })
-        } else {
-            productCollectionView.setCollectionViewLayout(createLayout(), animated: false, completion: {_ in
-                self.productCollectionView.setContentOffset(.zero, animated: false)
-            })
-        }
-        self.productCollectionView.reloadData()
-    }
-    
-    
 }
 
 
@@ -501,7 +514,6 @@ extension HomeVC {
             }else {
                 switchCollectionLayout()
             }
-            
         }
         
         viewModel.apiService.bind { [unowned self] in
@@ -515,18 +527,8 @@ extension HomeVC {
                 }
             case .error(let error):
                 print("Fascing the error \(error)")
-                
             }
         }
-        
     }
-    
-    func showErrorAlert(message: String) {
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
+
 }

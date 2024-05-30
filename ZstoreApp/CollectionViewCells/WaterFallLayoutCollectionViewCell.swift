@@ -31,16 +31,8 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     lazy var priceLabel = AppUIComponents.createLabel(text:"",textColor: .black_colour, textAlignment: .left,font:  UIFont.font(with: 18, family: FontType.medium))
     lazy var oldPriceLabel = AppUIComponents.createLabel(text:"",textColor:  .gray_color, textAlignment: .left,font:  UIFont.font(with: 13, family: FontType.regular))
     lazy var descriptionLabel = AppUIComponents.createLabel(text:"",textColor:  .description_colour, textAlignment: .left,font: UIFont.font(with: 13, family: FontType.regular))
-    let savedPriceButton = CustomButton(backgroundColor: .green_colour,
-                                         titleAlignment: .center,
-                                         titleFont: UIFont.font(with: 5, family: FontType.medium),
-                                         titleColor: .white_colour,
-                                         contentInsets: NSDirectionalEdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8),
-                                         isUserInteractionEnabled: false)
-    
-    //MARK: Variables
-    var indexPath: IndexPath?
-    
+    lazy var savedPriceButton = AppUIComponents.createButton(title: "", backgroundColor: .green_colour, titleColor: .white_colour, font: UIFont.font(with: 13, family: FontType.medium))
+        
     //MARK: Callback
     var actionOnCallBack: ((Bool) -> Void)?
 
@@ -54,7 +46,7 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        
+        savedPriceButton.contentEdgeInsets = .init(top: 2, left: 8, bottom: 2, right: 8)
         contentView.addSubview(productImageView)
         contentView.addSubview(favoriteImageView)
         contentView.addSubview(infoStackView)
@@ -156,8 +148,6 @@ class WaterFallLayoutCollectionViewCell: UICollectionViewCell {
         if let url = URL(string: product.imageUrl ?? "")  {
             productImageView.loadImage(from: url)
         }
-        titleLabel.numberOfLines = ((indexPath?.row ?? 0)%2 == 0) ? 2 : 0
-        descriptionLabel.numberOfLines = ((indexPath?.row ?? 0)%2 == 0) ? 2 : 0
         titleLabel.text = product.name
         priceLabel.text = String(Utils.formatAsIndianCurrency(product.price) ?? "")
         oldPriceLabel.attributedText = Utils.markText(String(product.price))

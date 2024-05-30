@@ -48,9 +48,10 @@ class LinearCollectionViewCell: UICollectionViewCell {
     //MARK: Setup the constraint
     private func setupViews() {
         titleLabel.numberOfLines = 3
-        priceLabel.numberOfLines = 3
-        oldPriceLabel.numberOfLines = 3
+        priceLabel.numberOfLines = 1
+        oldPriceLabel.numberOfLines = 1
         descriptionLabel.numberOfLines = 3
+        savedPriceButton.contentEdgeInsets = .init(top: 2, left: 8, bottom: 2, right: 8)
         contentView.addSubview(productImageView)
         contentView.addSubview(infoStackView)
         infoStackView.addArrangedSubview(titleLabel)
@@ -124,14 +125,17 @@ class LinearCollectionViewCell: UICollectionViewCell {
         descriptionLabel.attributedText = Utils.getModifiedString(product.productDescription ?? "")
         ratingVew.addRatingsDetails(with: product)
         if let color = product.colors {
+            colorsStackView.isHidden = false
             let colorsArray = color.split(separator: ",").map { String($0) }
             setupColorsView(colors: colorsArray)
+        }else{
+            colorsStackView.isHidden = true
         }
         isOfferApplied(isApplied: true)
         guard let selectedCardOffer = selectedCardOffer else{return}
         oldPriceLabel.attributedText = Utils.markText(Utils.formatAsIndianCurrency(product.price) ?? "")
         priceLabel.text = String(Utils.calculateDiscountedPrice(product.price, selectedCardOffer.percentage))
-        savedPriceButton.setTitle( "Save \(Utils.calculateDiscountSevedPrice(product.price, selectedCardOffer.percentage))", for: .normal)
+        lazy var savedPriceButton = AppUIComponents.createButton(title: "", backgroundColor: .green_colour, titleColor: .white_colour, font: UIFont.font(with: 13, family: FontType.medium))
         isOfferApplied(isApplied: false)
        
     }

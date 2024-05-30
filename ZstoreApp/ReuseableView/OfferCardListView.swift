@@ -31,6 +31,18 @@ class OfferCardListView: UICollectionReusableView{
         return button
     }()
     
+    lazy var mainStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 12
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    lazy var appliedContainerOuterView = AppUIComponents.createView()
+    
     // MARK: Variables
     var cardOffers: [CardOffers]?
     
@@ -67,65 +79,76 @@ class OfferCardListView: UICollectionReusableView{
         
         offerCollectionView.register(OfferCardCollectionViewCell.self, forCellWithReuseIdentifier: OfferCardCollectionViewCell.identifier)
         
-        addSubview(offerView)
+        addSubview(mainStackView)
+        mainStackView.addArrangedSubview(offerView)
+        mainStackView.addArrangedSubview(appliedContainerOuterView)
         offerView.addSubview(offerCollectionView)
         offerView.addSubview(offerImg)
         offerView.addSubview(offerTitle)
-        offerImg.tintColor = .orange_colour
         
+        offerImg.tintColor = .orange_colour
+    
         offerCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            offerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            offerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            offerView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            mainStackView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            
             offerView.heightAnchor.constraint(equalToConstant: 164)
         ])
         
         NSLayoutConstraint.activate([
             
             offerImg.leadingAnchor.constraint(equalTo: offerView.leadingAnchor,constant: 0),
-            offerImg.topAnchor.constraint(equalTo: offerView.topAnchor,constant: 12),
+            offerImg.centerYAnchor.constraint(equalTo: offerTitle.centerYAnchor),
             offerImg.heightAnchor.constraint(equalToConstant: 20),
             offerImg.widthAnchor.constraint(equalToConstant: 20),
-            offerTitle.leadingAnchor.constraint(equalTo: offerImg.trailingAnchor,constant: 10),
-            offerTitle.centerYAnchor.constraint(equalTo: offerImg.centerYAnchor)
-                
+            
+            offerTitle.leadingAnchor.constraint(equalTo: offerImg.trailingAnchor,constant: 6),
+            offerTitle.heightAnchor.constraint(equalToConstant: 22),
+            offerTitle.topAnchor.constraint(equalTo: offerView.topAnchor,constant: 11),
         ])
       
         NSLayoutConstraint.activate([
-            offerCollectionView.leadingAnchor.constraint(equalTo: offerView.leadingAnchor),
-            offerCollectionView.trailingAnchor.constraint(equalTo: offerView.trailingAnchor),
             offerCollectionView.topAnchor.constraint(equalTo: offerTitle.bottomAnchor,constant: 11),
             offerCollectionView.bottomAnchor.constraint(equalTo: offerView.bottomAnchor),
+            offerCollectionView.leadingAnchor.constraint(equalTo: offerView.leadingAnchor),
+            offerCollectionView.trailingAnchor.constraint(equalTo: offerView.trailingAnchor),
         ])
     }
     
     func setupAppliedOfferView() {
         removeAppliedOfferBtn.addTarget(self, action: #selector(actionOnRemoveOffer(_:)), for: .touchUpInside)
 
-        addSubview(containerView)
+        appliedContainerOuterView.addSubview(containerView)
         containerView.addSubview(appliedLabel)
         containerView.addSubview(applledOfferValueLabel)
         containerView.addSubview(removeAppliedOfferBtn)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: offerView.bottomAnchor, constant: 12),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            containerView.trailingAnchor.constraint(equalTo: removeAppliedOfferBtn.trailingAnchor, constant: 10),
-            containerView.heightAnchor.constraint(equalToConstant: 32),
+            containerView.topAnchor.constraint(equalTo: appliedContainerOuterView.bottomAnchor, constant: 0),
+            containerView.leadingAnchor.constraint(equalTo: appliedContainerOuterView.leadingAnchor, constant: 0),
+            containerView.centerYAnchor.constraint(equalTo: appliedContainerOuterView.centerYAnchor),
+            containerView.bottomAnchor.constraint(equalTo: appliedContainerOuterView.bottomAnchor, constant: 0),
+            appliedContainerOuterView.heightAnchor.constraint(equalToConstant: 32),
         ])
-        containerViewBottomConstraints = containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
-        containerViewBottomConstraints.isActive = true
+       
         NSLayoutConstraint.activate([
             appliedLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
             appliedLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            applledOfferValueLabel.leadingAnchor.constraint(equalTo: appliedLabel.trailingAnchor, constant: 5),
+            appliedLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 6),
+            appliedLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -6),
+            
+            applledOfferValueLabel.leadingAnchor.constraint(equalTo: appliedLabel.trailingAnchor, constant: 6),
             applledOfferValueLabel.centerYAnchor.constraint(equalTo: appliedLabel.centerYAnchor),
-            removeAppliedOfferBtn.leadingAnchor.constraint(equalTo: applledOfferValueLabel.trailingAnchor, constant: 5),
+            
+            removeAppliedOfferBtn.leadingAnchor.constraint(equalTo: applledOfferValueLabel.trailingAnchor, constant: 2),
             removeAppliedOfferBtn.centerYAnchor.constraint(equalTo: applledOfferValueLabel.centerYAnchor),
-            removeAppliedOfferBtn.heightAnchor.constraint(equalToConstant: 20),
-            removeAppliedOfferBtn.widthAnchor.constraint(equalToConstant: 20),
-
+            removeAppliedOfferBtn.heightAnchor.constraint(equalToConstant: 18),
+            removeAppliedOfferBtn.widthAnchor.constraint(equalToConstant: 18),
+            removeAppliedOfferBtn.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10)
+//            containerViewBottomConstraints
         ])
     }
     
@@ -158,10 +181,10 @@ class OfferCardListView: UICollectionReusableView{
     ///
     /// - Parameter isOfferAdded: A Boolean indicating whether an offer has been added.
     func setOfferViewConstraint(isOfferAdded: Bool) {
-        self.containerView.isHidden = !isOfferAdded
-        self.containerViewBottomConstraints.constant = isOfferAdded ? -12 : 44
+        self.appliedContainerOuterView.isHidden = !isOfferAdded
+//        self.containerViewBottomConstraints.constant = isOfferAdded ? -12 : 44
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
-            self.containerView.layoutIfNeeded()
+            self.appliedContainerOuterView.layoutIfNeeded()
         }, completion: nil)
     }
     

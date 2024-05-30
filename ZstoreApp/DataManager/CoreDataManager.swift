@@ -40,13 +40,15 @@ extension CoreDataManager {
             }
 
             let offersFetchRequest: NSFetchRequest<CardOffers> = CardOffers.fetchRequest()
+            let sortByCardId = NSSortDescriptor(key: "id", ascending: true)
+            offersFetchRequest.sortDescriptors = [sortByCardId]
             let offersList = try await context.perform {
                 try self.context.fetch(offersFetchRequest)
             }
 
             let categoriesFetchRequest: NSFetchRequest<CategoryList> = CategoryList.fetchRequest()
-            let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
-            categoriesFetchRequest.sortDescriptors = [sortDescriptor]
+            let sortByCategoryId = NSSortDescriptor(key: "id", ascending: true)
+            categoriesFetchRequest.sortDescriptors = [sortByCategoryId]
             let categories = try await context.perform {
                 try self.context.fetch(categoriesFetchRequest)
             }

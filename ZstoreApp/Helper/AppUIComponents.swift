@@ -52,12 +52,16 @@ class AppUIComponents {
         return label
     }
     
-    static func createButton(title: String, target: Any?, action: Selector, backgroundColor: UIColor = .systemBlue, titleColor: UIColor = .white) -> UIButton {
+    static func createButton(title: String, target: Any? = nil, action: Selector? = nil, backgroundColor: UIColor = .systemBlue, titleColor: UIColor = .white, font: UIFont = UIFont.font(with: 13, family: FontType.medium)) -> UIButton {
+        
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
         button.setTitleColor(titleColor, for: .normal)
         button.backgroundColor = backgroundColor
-        button.addTarget(target, action: action, for: .touchUpInside)
+        if action != nil {
+            button.addTarget(target, action: action!, for: .touchUpInside)
+        }
+        button.titleLabel?.font = font
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 8
         button.clipsToBounds = true

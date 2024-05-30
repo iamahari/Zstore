@@ -1,6 +1,6 @@
 import Foundation
 
-class ProductDataManager {
+class DataManager {
     
     
     /// Fetches product details, either from Core Data or via an API call, depending on network connectivity and data availability.

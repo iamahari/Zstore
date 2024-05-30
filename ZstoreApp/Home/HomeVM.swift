@@ -44,7 +44,12 @@ class HomeVM {
         selectedCategoryIndex = index
         categorysService.value = (selectedCategoryIndex, lastSelectedIndex)
         self.isWaterFallLayout = categorys?[index].layout == "waterfall"
-        filterByCardOfferID(with: selectedCardOffer?.id)
+        if let searchValue = searchValue, !searchValue.isEmpty {
+            filterProductBySearch(with: searchValue)
+        }else{
+            filterByCardOfferID(with: selectedCardOffer?.id)
+        }
+        
     }
 
     /// Filters products based on user search input.
@@ -64,8 +69,10 @@ class HomeVM {
             } else {
                 apiService.value = .error("Product not found.")
             }
+            productSerview.value = false
+            categorysService.value = (selectedCategoryIndex, nil)
         }
-        categorysService.value = (selectedCategoryIndex, nil)
+       
     }
 
     /// Filters products by category ID.
@@ -79,6 +86,7 @@ class HomeVM {
         }
         
         productSerview.value = false
+        categorysService.value = (selectedCategoryIndex, nil)
     }
 
     /// Filters products by card offer ID.
@@ -121,7 +129,7 @@ extension HomeVM {
         apiService.value = .loading
         
         do {
-            let fetchedData = try await ProductDataManager.fetch()
+            let fetchedData = try await DataManager.fetch()
             let (categories,offers,_) = fetchedData
             DispatchQueue.main.async {
                 self.cardOffers = offers
